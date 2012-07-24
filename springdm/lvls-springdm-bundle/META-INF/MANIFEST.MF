@@ -1,0 +1,11 @@
+Manifest-Version: 1.0
+Built-By: auntiedt
+Build-Jdk: 1.6.0_24
+Bundle-Version: 0.1
+Tool: Bnd-0.0.238
+Bundle-Name: Spring OSGi Bundle
+Bnd-LastModified: 1303422587744
+Created-By: Apache Maven Bundle Plugin
+Bundle-ManifestVersion: 2
+Bundle-SymbolicName: com.lvls.lvls-springdm-bundle
+

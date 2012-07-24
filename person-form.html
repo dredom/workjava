@@ -1,0 +1,21 @@
+<html xmlns:xf="http://www.w3.org/2002/xforms">
+
+<head>
+  <xf:model>
+    <xf:instance>
+      <person>
+        <fname/>
+        <lname/>
+      </person>
+    </xf:instance>
+    <xf:submission id="form1" method="get" action="submit.asp"/>
+  </xf:model>
+</head>
+
+<body>
+<xf:input ref="fname"><xf:label>First Name</xf:label></xf:input><br />
+<xf:input ref="lname"><xf:label>Last Name</xf:label></xf:input><br /><br />
+<xf:submit submission="form1"><xf:label>Submit</xf:label></xf:submit>
+</body>
+
+</html>

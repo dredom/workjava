@@ -1,0 +1,100 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.lvls.mvn</groupId>
+  <artifactId>mvnsimple</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>mvnsimple</name>
+  <parent>
+    <groupId>com.lvlstudios</groupId>
+    <artifactId>lvlstudios-base</artifactId>
+    <version>1</version>
+  </parent>
+
+  <build>
+   <plugins>
+	<plugin>
+		<groupId>com.lvls.plugin</groupId>
+		<artifactId>lvls-hello-plugin</artifactId>
+		<version>1.0-SNAPSHOT</version>
+		<executions>
+			<execution>
+				<phase>compile</phase>
+				<goals>
+					<goal>sayhi</goal>
+				</goals>
+			</execution>
+		</executions>
+		<configuration>
+			<greeting>Yo ho!</greeting>
+		</configuration>
+	</plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>2.2</version>
+        <configuration>
+          <archive>
+            <manifest>
+              <addClasspath>true</addClasspath>
+              <mainClass>com.lvls.mvn.App</mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+      </plugin>
+
+ 
+  </plugins>
+  </build> 
+
+  <repositories>
+   <repository>
+      <id>powermock-repo</id>
+      <url>http://powermock.googlecode.com/svn/repo/</url>
+   </repository>
+  </repositories>
+
+  <dependencies>
+	<dependency>
+		<groupId>javax.xml.bind</groupId>
+		<artifactId>jaxb-api</artifactId>
+		<version>2.0</version>
+	</dependency>
+
+    <dependency>
+      <groupId>org.mockito</groupId>
+      <artifactId>mockito-all</artifactId>
+      <version>1.8.2</version>
+      <scope>test</scope>
+    </dependency>
+   <dependency>
+      <groupId>org.powermock.modules</groupId>
+      <artifactId>powermock-module-junit4</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+   </dependency>
+   <dependency>
+      <groupId>org.powermock.api</groupId>
+      <artifactId>powermock-api-mockito</artifactId>
+      <version>${powermock.version}</version>
+      <scope>test</scope>
+   </dependency>  
+   
+   <dependency>
+	  <groupId>freemarker</groupId>
+	  <artifactId>freemarker</artifactId>
+	  <version>2.3.8</version>
+	</dependency>
+
+  </dependencies>
+
+
+  
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <powermock.version>1.3.1</powermock.version>
+  </properties>
+
+</project>

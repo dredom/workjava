@@ -1,0 +1,93 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>com.lvlstudios</groupId>
+    <artifactId>lvlstudios-base</artifactId>
+    <version>1</version>
+  </parent>
+  <groupId>com.lvl.au</groupId>
+  <artifactId>restspring</artifactId>
+  <packaging>war</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>Maven Webapp Archetype</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+   <dependency>
+	  <groupId>javax.ws.rs</groupId>
+	  <artifactId>jsr311-api</artifactId>
+	  <version>1.1.1</version>
+    </dependency>
+    <dependency>
+	  <groupId>com.sun.jersey</groupId>
+	  <artifactId>jersey-core</artifactId>
+	  <version>1.4-ea06</version>
+    </dependency>
+    <dependency>
+	  <groupId>com.sun.jersey</groupId>
+	  <artifactId>jersey-server</artifactId>
+	  <version>1.4-ea06</version>
+    </dependency>
+    <dependency>
+	  <groupId>com.sun.jersey</groupId>
+	  <artifactId>jersey-json</artifactId>
+	  <version>1.4-ea06</version>
+    </dependency>
+    <dependency>
+	  <groupId>com.sun.jersey</groupId>
+	  <artifactId>jersey-spring</artifactId>
+	  <version>1.0</version>
+	</dependency>
+    
+    <dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-core</artifactId>
+	  <version>3.0.4.RELEASE</version>
+    </dependency>
+    <dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-beans</artifactId>
+	  <version>3.0.4.RELEASE</version>
+	</dependency>
+	<dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-context</artifactId>
+	  <version>3.0.4.RELEASE</version>
+	</dependency>
+	<dependency>
+	  <groupId>log4j</groupId>
+	  <artifactId>log4j</artifactId>
+	  <version>1.2.16</version>
+	</dependency>
+	
+	<dependency>
+	  <groupId>org.springframework</groupId>
+	  <artifactId>spring-test</artifactId>
+	  <version>3.0.4.RELEASE</version>
+	  <scope>test</scope>
+	</dependency>
+
+  </dependencies>
+  <build>
+    <finalName>restspring</finalName>
+    <plugins>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>exec-maven-plugin</artifactId>
+        <version>1.2</version>
+        <executions>
+          <execution>
+            <goals>
+              <goal>java</goal>
+            </goals>
+          </execution>
+        </executions>
+ 
+        <configuration>
+          <mainClass>com.lvls.au.spring.App</mainClass>
+        </configuration>
+      </plugin>
+    </plugins>
+
+  </build>
+</project>
