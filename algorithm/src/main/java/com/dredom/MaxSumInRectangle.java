@@ -2,8 +2,6 @@ package com.dredom;
 
 import static java.lang.System.out;
 
-import java.util.Arrays;
-
 /**
  * Given a 2-dimensional array of positive and negative integers, find the sub-rectangle with the largest sum.
  * The sum of a rectangle is the sum of all the elements in that rectangle.
@@ -25,7 +23,7 @@ public class MaxSumInRectangle {
     static String[] inputs = {
         "1 2 3",
         "3 4 5",
-        "3 4 -5"
+        "-5 4 -5"
     };
 
 
@@ -47,9 +45,9 @@ public class MaxSumInRectangle {
 
         instance.printHeading();
         //                       y, x, y2, x2
-        instance.printArraySum(num, 0, 0, 1, 1);
-        instance.printArraySum(num, 0, 1, 2, 2);
-        instance.printArraySum(num, 1, 1, 2, 2);
+        instance.printArraySum(num, 0, 0, 1, 2);
+//        instance.printArraySum(num, 0, 1, 2, 2);
+//        instance.printArraySum(num, 1, 1, 2, 2);
         instance.findMax(num);
 
     }
@@ -57,37 +55,45 @@ public class MaxSumInRectangle {
     // =======================================================
 
 
-    int maxSum = 0;
     int[] yxy2x2;
 
     /**
      * Rectangle is min 2x2, and smaller than array.
      * @param array
      */
-    public void findMax(int[][] array) {
-        final int min = 2;
-        final int len = array.length;
+    public int findMax(int[][] array) {
+        final int dim = array.length - 1;
+        int maxSum = 0;
         int y = 0;
-        int x = 0;
         // traverse down the y axis
-        while (y < (len - min)) {
+        while (y < dim) {
             int y2 = y + 1;
-            // traverse x axis for this y
-            while (x < (len - min)) {
-                int x2 = x + 1;
-                while (x2 < len) {
-                    int sum = sumArray(array, y, x, y2, x2);
-                    if (sum > maxSum) {
-                        yxy2x2 = new int[] { y, x, y2, x2 };
-                        maxSum = sum;
+            while (y2 <= dim) {
+                // traverse x axis for this y
+                int x = 0;
+                while (x < dim) {
+                    int x2 = x + 1;
+                    while (x2 <= dim) {
+                        // Ensure smaller than full rectangle
+                        int ylen = y2 - y;
+                        int xlen = x2 - x;
+                        if (xlen < dim || ylen < dim) {
+                            int sum = sumArray(array, y, x, y2, x2);
+                            if (sum > maxSum) {
+                                yxy2x2 = new int[] { y, x, y2, x2 };
+                                maxSum = sum;
+                            }
+                        }
+                        x2++;
                     }
-                    x2++;
+                    x++;
                 }
-                x++;
+                y2++;
             }
             y++;
         }
-        out.printf("Max sum = %d, y,x=%d,%d y2,x2=%d,%d", maxSum, yxy2x2[0], yxy2x2[1], yxy2x2[2], yxy2x2[3]);
+        out.printf("Max sum = %d, y,x=%d,%d y2,x2=%d,%d \n", maxSum, yxy2x2[0], yxy2x2[1], yxy2x2[2], yxy2x2[3]);
+        return maxSum;
     }
 
     void printArray(int[][] array) {
