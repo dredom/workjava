@@ -62,6 +62,7 @@ public class MaxSumInRectangle {
      * @param array
      */
     public int findMax(int[][] array) {
+        final long start = System.currentTimeMillis();
         final int dim = array.length - 1;
         int maxSum = 0;
         int y = 0;
@@ -75,9 +76,7 @@ public class MaxSumInRectangle {
                     int x2 = x + 1;
                     while (x2 <= dim) {
                         // Ensure smaller than full rectangle
-                        int ylen = y2 - y;
-                        int xlen = x2 - x;
-                        if (xlen < dim || ylen < dim) {
+                        if ((x > 0 || y > 0) || (y2 < dim || x2 < dim)) {
                             int sum = sumArray(array, y, x, y2, x2);
                             if (sum > maxSum) {
                                 yxy2x2 = new int[] { y, x, y2, x2 };
@@ -92,7 +91,9 @@ public class MaxSumInRectangle {
             }
             y++;
         }
-        out.printf("Max sum = %d, y,x=%d,%d y2,x2=%d,%d \n", maxSum, yxy2x2[0], yxy2x2[1], yxy2x2[2], yxy2x2[3]);
+        final long time = System.currentTimeMillis() - start;
+        out.printf("Max sum = %d, y,x=%d,%d y2,x2=%d,%d  (%dms)\n",
+                maxSum, yxy2x2[0], yxy2x2[1], yxy2x2[2], yxy2x2[3], time);
         return maxSum;
     }
 
