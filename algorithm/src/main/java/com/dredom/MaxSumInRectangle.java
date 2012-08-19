@@ -24,7 +24,7 @@ public class MaxSumInRectangle {
 
     static String[] inputs = {
         "1 2 3",
-        "2 3 4",
+        "3 4 5",
         "3 4 -5"
     };
 
@@ -50,16 +50,45 @@ public class MaxSumInRectangle {
         instance.printArraySum(num, 0, 0, 1, 1);
         instance.printArraySum(num, 0, 1, 2, 2);
         instance.printArraySum(num, 1, 1, 2, 2);
+        instance.findMax(num);
+
     }
 
     // =======================================================
 
-    class Arry {
-        public int x;
-        public int y;
-        public int size;
-    }
 
+    int maxSum = 0;
+    int[] yxy2x2;
+
+    /**
+     * Rectangle is min 2x2, and smaller than array.
+     * @param array
+     */
+    public void findMax(int[][] array) {
+        final int min = 2;
+        final int len = array.length;
+        int y = 0;
+        int x = 0;
+        // traverse down the y axis
+        while (y < (len - min)) {
+            int y2 = y + 1;
+            // traverse x axis for this y
+            while (x < (len - min)) {
+                int x2 = x + 1;
+                while (x2 < len) {
+                    int sum = sumArray(array, y, x, y2, x2);
+                    if (sum > maxSum) {
+                        yxy2x2 = new int[] { y, x, y2, x2 };
+                        maxSum = sum;
+                    }
+                    x2++;
+                }
+                x++;
+            }
+            y++;
+        }
+        out.printf("Max sum = %d, y,x=%d,%d y2,x2=%d,%d", maxSum, yxy2x2[0], yxy2x2[1], yxy2x2[2], yxy2x2[3]);
+    }
 
     void printArray(int[][] array) {
         out.printf("\n \t");
