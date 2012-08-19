@@ -46,9 +46,10 @@ public class MaxSumInRectangle {
         instance.printArray(num);
 
         instance.printHeading();
-        instance.printArraySum(num, 0, 1, 0, 1);
-        instance.printArraySum(num, 0, 1, 0, 2);
-        instance.printArraySum(num, 1, 2, 1, 2);
+        //                       y, x, y2, x2
+        instance.printArraySum(num, 0, 0, 1, 1);
+        instance.printArraySum(num, 0, 1, 2, 2);
+        instance.printArraySum(num, 1, 1, 2, 2);
     }
 
     // =======================================================
@@ -61,8 +62,13 @@ public class MaxSumInRectangle {
 
 
     void printArray(int[][] array) {
+        out.printf("\n \t");
+        for (int x = 0; x < array[0].length; x++) {
+            String s = "x[" + x + "]";
+            out.printf("%5s", s);
+        }
         for (int i = 0; i < array.length; i++) {
-            out.print("\n\t");
+            out.printf("\n y[%d]\t", i);
             for (int j = 0; j < array[i].length; j++) {
                 out.printf("%4d ", array[i][j]);
             }
@@ -71,17 +77,17 @@ public class MaxSumInRectangle {
     }
 
     void printHeading() {
-        out.printf("\t\t\t  x,  x2 \t  y,  y2 \n");
+        out.printf("\t\t\t  y,  x \t y2, x2 \n");
     }
-    void printArraySum(int[][] array, int x, int x2, int y, int y2) {
-        int sum = sumArray(array, x, x2, y, y2);
-        out.printf("    %6d \t\t%3d, %3d \t%3d, %3d \n", sum, x, x2, y, y2);
+    void printArraySum(int[][] array, int y, int x, int y2, int x2) {
+        int sum = sumArray(array, y, x, y2, x2);
+        out.printf("    %6d \t\t%3d,%3d \t%3d,%3d \n", sum, y, x, y2, x2);
     }
 
-    int sumArray(int[][] array, int x, int x2, int y, int y2) {
+    int sumArray(int[][] array, int y, int x, int y2, int x2) {
         int sum = 0;
-        for (int i = x; i <= x2; i++) {
-            for (int j = y; j <= y2; j++) {
+        for (int i = y; i <= y2; i++) {
+            for (int j = x; j <= x2; j++) {
                 sum += array[i][j];
             }
         }
