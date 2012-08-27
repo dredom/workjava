@@ -43,11 +43,22 @@ public class BreadthFirstSearch {
     static boolean[][][][] visited = new boolean[gridlen][gridlen][gridlen][gridlen];
 
     static String[] board = {
-        "....",
-        ".A..",
-        "..B.",
-        "...."
-    };
+//        "....",
+//        ".A..",
+//        "..B.",
+//        "...."
+//    };    // result 2
+
+//            "XXXXXXXXX",
+//            "A...X...B",
+//            "XXXXXXXXX"
+//        };  // result -1
+
+            "XXXXXXXXX",
+            "A.......B",
+            "XXXX.XXXX"
+        };  // result 8
+
     static int expectedTurns = 2;
 
     static class Node {
