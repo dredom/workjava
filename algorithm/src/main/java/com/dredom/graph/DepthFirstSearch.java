@@ -10,6 +10,12 @@ import java.util.List;
 /**
  *   The depth first search (DFS) is well geared towards problems where we want to
  *   find any solution to the problem (not necessarily the shortest path), or to visit all of the nodes in the graph.
+ * <p>
+ * Problem based on graphics fill requirement.
+ * <p>
+ * Input: Rectangles which are already filled (true).
+ * <p>
+ * Output: Sizes of unfilled rectangles;
  */
 public class DepthFirstSearch {
 
@@ -23,6 +29,7 @@ public class DepthFirstSearch {
     static String[] rectangles = {
         "0 292 399 307",
 //        "0 2 3 4",  // top, left, bottom, right
+//        "0 192 399 207", "0 392 399 407", "120 0 135 599", "260 0 275 599",
     };
     static int[] expected = {
         116800,  116800
@@ -50,6 +57,12 @@ public class DepthFirstSearch {
     }
 
 
+    /**
+     * Search for unfilled (false) pixels and tally up
+     * the sizes of the unfilled rectangles.
+     * @param input
+     * @return sizes of areas unfilled
+     */
     static Integer[] search(boolean[][] input) {
         List<Integer> results = new ArrayList<Integer>();
         for (int x = 0; x < xlen; x++) {
@@ -69,13 +82,6 @@ public class DepthFirstSearch {
         stack.add(new Node(x, y));
         while (!stack.isEmpty()) {
             Node top = stack.pop();
-            // Ensure within bound of grid
-            if (top.x < 0 || top.x >= xlen) {
-                continue;
-            }
-            if (top.y < 0 || top.y >= ylen) {
-                continue;
-            }
             // Check we haven't visited this pixel before
             if (fill[top.x][top.y]) {
                 continue;
@@ -89,11 +95,18 @@ public class DepthFirstSearch {
 
             // Now we know there is at least one empty node, so
             // visit every adjacent node.
-            stack.push(new Node( top.x + 1, top.y));
-            stack.push(new Node( top.x - 1, top.y));
-            stack.push(new Node( top.x, top.y + 1));
-            stack.push(new Node( top.x, top.y - 1));
-
+            if (top.x + 1 < xlen) {
+                stack.push(new Node( top.x + 1, top.y));
+            }
+            if (top.x > 0) {
+                stack.push(new Node( top.x - 1, top.y));
+            }
+            if (top.y + 1 < ylen) {
+                stack.push(new Node( top.x, top.y + 1));
+            }
+            if (top.y > 0) {
+                stack.push(new Node( top.x, top.y - 1));
+            }
         }
         return result;
     }
