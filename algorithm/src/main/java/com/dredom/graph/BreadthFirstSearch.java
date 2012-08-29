@@ -3,9 +3,6 @@ package com.dredom.graph;
 import static java.lang.System.out;
 
 import java.util.ArrayDeque;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Given a board consisting of empty space, walls, and the starting positions of two players A and B,
@@ -43,24 +40,29 @@ public class BreadthFirstSearch {
     static boolean[][][][] visited = new boolean[gridlen][gridlen][gridlen][gridlen];
 
     static String[] board = {
-//        "....",
-//        ".A..",
-//        "..B.",
-//        "...."
-//    };    // result 2
+        "....",
+        ".A..",
+        "..B.",
+        "...."
+    };    // result 2
 
 //            "XXXXXXXXX",
 //            "A...X...B",
 //            "XXXXXXXXX"
 //        };  // result -1
 
-            "XXXXXXXXX",
-            "A.......B",
-            "XXXX.XXXX"
-        };  // result 8
+//            "XXXXXXXXX",
+//            "A.......B",
+//            "XXXX.XXXX"
+//        };  // result 8
 
     static int expectedTurns = 2;
 
+    /**
+     * The Node is used to "travel" the grid for both A and B, with new instances
+     * representing new positions as we attempt to find how many steps it would
+     * take to swap positions for A and B.
+     */
     static class Node {
         public int pAx;
         public int pAy;
