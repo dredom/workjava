@@ -1,5 +1,11 @@
 package com.dredom.graph;
 
+import static java.lang.System.out;
+
+import java.util.ArrayDeque;
+import java.util.Iterator;
+
+
 // Balanced BinarySearchTree class
 //
 // CONSTRUCTION: with no initializer
@@ -15,31 +21,51 @@ package com.dredom.graph;
 // void printTree( )      --> Print tree in sorted order
 
 /**
- * Implements an AVL tree. Note that all "matching" is based on the compareTo
- * method.
+ * Implements an AVL tree. Note that all "matching" is based on the compareTo method.
+ * <p>
+ * A  binary tree is defined to be balanced if, at each node,
+ * the height of the left and right subtrees differ by at most one.
+ * <p>
+ * An AVL Tree is a self-balancing binary search tree.
+ * This means that the heights of a given node's children trees are either the same or they differ by one.
+ * This is accomplished by rotating the tree nodes.
+ * <p>
+ * Binary tree rotations work by moving a child node b up to its parent's level, and making the parent node a child node.
+ * When this happens, the new parent node has an extra child, and the new child node has one fewer children.
+ * So to fix this, one of the new parent's children is set as a child of the old parent node.
+ * <p>
+ * Because the AVL Tree is self-balancing, all of its operations (insertion, lookup, and removal) all operate in O(log(n)) time.
+ *
+ * <pre>
+ *        5
+ *      /   \
+ *     3     9
+ *          / \
+ *         6   21
+ * </pre>
+ * AVL - Adel’son-Vel’skii and Landis algorithm.
  *
  * @author Mark Allen Weiss
  */
-public class AvlTree {
+public class AvlTree<E extends Comparable<?>> {
 
     /** The tree root. */
-    private AvlNode root;
+    private AvlNode<E> root;
 
     /**
      * Construct the tree.
      */
     public AvlTree() {
-        root = null;
+        this.root = null;
     }
 
     /**
      * Insert into the tree; duplicates are ignored.
      *
-     * @param x
-     *            the item to insert.
+     * @param x  the item to insert.
      */
-    public void insert(Comparable x) {
-        root = insert(x, root);
+    public void insert(E x) {
+        this.root = insert(x, this.root);
     }
 
     /**
@@ -73,11 +99,10 @@ public class AvlTree {
     /**
      * Find an item in the tree.
      *
-     * @param x
-     *            the item to search for.
+     * @param x  the item to search for.
      * @return the matching item or null if not found.
      */
-    public Comparable find(Comparable x) {
+    public E find(E x) {
         return elementAt(find(x, root));
     }
 
@@ -113,7 +138,7 @@ public class AvlTree {
      * @param t  the node.
      * @return the element field or null if t is null.
      */
-    private Comparable elementAt(AvlNode t) {
+    private E elementAt(AvlNode<E> t) {
         return t == null ? null : t.element;
     }
 
@@ -124,25 +149,37 @@ public class AvlTree {
      * @param t  the node that roots the tree.
      * @return the new root.
      */
-    private AvlNode insert(Comparable x, AvlNode t) {
-        if (t == null)
+    private AvlNode<E> insert(Comparable x, AvlNode<E> t) {
+        out.printf("insert %s into %s \n", x, t);
+        if (t == null) {
             t = new AvlNode(x, null, null);
-        else if (x.compareTo(t.element) < 0) {
+        } else if (x.compareTo(t.element) < 0) {
             t.left = insert(x, t.left);
-            if (height(t.left) - height(t.right) == 2)
+            if (height(t.left) - height(t.right) == 2) {
+                out.printf(" BEFORE rotate left on %s \n", t);
+                printNodes(t);
                 if (x.compareTo(t.left.element) < 0)
                     t = rotateWithLeftChild(t);
                 else
                     t = doubleWithLeftChild(t);
+                out.printf(" AFTER rotate left \n", t);
+                printNodes(t);
+            }
         } else if (x.compareTo(t.element) > 0) {
             t.right = insert(x, t.right);
-            if (height(t.right) - height(t.left) == 2)
+            if (height(t.right) - height(t.left) == 2) {
+                out.printf(" BEFORE rotate right on %s \n", t);
+                printNodes(t);
                 if (x.compareTo(t.right.element) > 0)
                     t = rotateWithRightChild(t);
                 else
                     t = doubleWithRightChild(t);
-        } else
+                out.printf(" AFTER rotate right \n", t);
+                printNodes(t);
+            }
+        } else {
             ; // Duplicate; do nothing
+        }
         t.height = max(height(t.left), height(t.right)) + 1;
         return t;
     }
@@ -166,8 +203,7 @@ public class AvlTree {
     /**
      * Internal method to find the largest item in a subtree.
      *
-     * @param t
-     *            the node that roots the tree.
+     * @param t  the node that roots the tree.
      * @return node containing the largest item.
      */
     private AvlNode findMax(AvlNode t) {
@@ -182,20 +218,19 @@ public class AvlTree {
     /**
      * Internal method to find an item in a subtree.
      *
-     * @param x
-     *            is item to search for.
-     * @param t
-     *            the node that roots the tree.
+     * @param x  is item to search for.
+     * @param root  the node that roots the tree.
      * @return node containing the matched item.
      */
-    private AvlNode find(Comparable x, AvlNode t) {
-        while (t != null)
-            if (x.compareTo(t.element) < 0)
-                t = t.left;
-            else if (x.compareTo(t.element) > 0)
-                t = t.right;
+    private AvlNode<E> find(Comparable x, AvlNode<E> root) {
+        while (root != null) {
+            if (x.compareTo(root.element) < 0)
+                root = root.left;
+            else if (x.compareTo(root.element) > 0)
+                root = root.right;
             else
-                return t; // Match
+                return root; // Match
+        }
 
         return null; // No match
     }
@@ -206,13 +241,45 @@ public class AvlTree {
      * @param t
      *            the node that roots the tree.
      */
-    private void printTree(AvlNode t) {
+    private void printTree(AvlNode<E> t) {
         if (t != null) {
             printTree(t.left);
             System.out.println(t.element);
             printTree(t.right);
         }
     }
+
+    public void printNodes() {
+        out.println("Tree nodes:");
+        printNodes(root);
+    }
+    private void printNodes(AvlNode<E> root) {
+        ArrayDeque<AvlNode<E>> queue = new ArrayDeque<AvlNode<E>>();
+        queue.add(root);
+        int level = 0;
+        while(queue.isEmpty() == false) {
+            out.printf(" %3d: ", level);
+            Iterator<AvlNode<E>> iter = queue.iterator();
+            while (iter.hasNext()) {
+                AvlNode<E> node = iter.next();
+                for (int i = 0; i < node.height; i++) out.print(' ');
+                out.printf(" %6s", node);
+            }
+            int size = queue.size();
+            for (int i = 0; i < size; i++) {
+                AvlNode<E> node = queue.removeFirst();
+                if (node.left != null) {
+                    queue.add(node.left);
+                }
+                if (node.right != null) {
+                    queue.add(node.right);
+                }
+            }
+            out.println();
+            level++;
+        }
+    }
+
 
     /**
      * Return the height of node t, or -1, if null.
@@ -233,6 +300,7 @@ public class AvlTree {
      * rotation for case 1. Update heights, then return new root.
      */
     private static AvlNode rotateWithLeftChild(AvlNode k2) {
+        out.printf("     rotateWithLeftChild of %s \n" , k2);
         AvlNode k1 = k2.left;
         k2.left = k1.right;
         k1.right = k2;
@@ -246,6 +314,7 @@ public class AvlTree {
      * rotation for case 4. Update heights, then return new root.
      */
     private static AvlNode rotateWithRightChild(AvlNode k1) {
+        out.printf("     rotateWithRightChild of %s \n" , k1);
         AvlNode k2 = k1.right;
         k1.right = k2.left;
         k2.left = k1;
@@ -260,6 +329,7 @@ public class AvlTree {
      * rotation for case 2. Update heights, then return new root.
      */
     private static AvlNode doubleWithLeftChild(AvlNode k3) {
+        out.printf("    doubleWithLeftChild of %s \n", k3);
         k3.left = rotateWithRightChild(k3.left);
         return rotateWithLeftChild(k3);
     }
@@ -270,9 +340,13 @@ public class AvlTree {
      * rotation for case 3. Update heights, then return new root.
      */
     private static AvlNode doubleWithRightChild(AvlNode k1) {
+        out.printf("    doubleWithRightChild of %s \n", k1);
         k1.right = rotateWithLeftChild(k1.right);
         return rotateWithRightChild(k1);
     }
+
+
+    static int[] input1 = { 1, 2, 3, 4 };
 
      // Test program
     public static void main(String[] args) {
@@ -282,18 +356,28 @@ public class AvlTree {
 
         System.out.println("Checking... (no more output means success)");
 
-        for (int i = GAP; i != 0; i = (i + GAP) % NUMS)
-            t.insert(new Integer(i));
+//        for (int i = GAP; i != 0; i = (i + GAP) % NUMS)
+//            t.insert(new Integer(i));
+        int[] input = input1;
+        for (int i = 0; i < input.length; i ++) {
+            t.insert(new Integer(input[i]));
+        }
+        Object found = t.find(new Integer(4));
+        found = t.find(new Integer(99));
 
         if (NUMS < 40)
             t.printTree();
+        t.printNodes();
+
         if (((Integer) (t.findMin())).intValue() != 1)
             System.out.println("FindMin error!");
         if ( ((Integer) (t.findMax())).intValue() != NUMS - 1)
             System.out.println("FindMax error!");
 
-        for (int i = 1; i < NUMS; i++)
-            if (((Integer) (t.find(new Integer(i)))).intValue() != i)
-                System.out.println("Find error1!");
+//        for (int i = 1; i < NUMS; i++)
+//            if (((Integer) (t.find(new Integer(i)))).intValue() != i)
+//                System.out.println("Find error1!");
     }
+
+
 }

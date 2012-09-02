@@ -30,7 +30,7 @@ public class BinaryTreeSearch {
         }
     }
 
-    static int[] keys = { 5, 3, 6, 1 };
+    static int[] keys = { 5, 3, 6, 1, 2, 4 };
 
     /**
      * Main

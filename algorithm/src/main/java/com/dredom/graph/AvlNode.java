@@ -1,18 +1,18 @@
 package com.dredom.graph;
 
-class AvlNode {
+class AvlNode<E extends Comparable<?>> {
     // Friendly data; accessible by other package routines
-    Comparable element; // The data in the node
-    AvlNode left; // Left child
-    AvlNode right; // Right child
+    E element; // The data in the node
+    AvlNode<E> left; // Left child
+    AvlNode<E> right; // Right child
     int height; // Height
 
     // Constructors
-    AvlNode(Comparable theElement) {
+    AvlNode(E theElement) {
         this(theElement, null, null);
     }
 
-    AvlNode(Comparable element, AvlNode lt, AvlNode rt) {
+    AvlNode(E element, AvlNode<E> lt, AvlNode<E> rt) {
         this.element = element;
         this.left = lt;
         this.right = rt;
@@ -21,6 +21,6 @@ class AvlNode {
 
     @Override
     public String toString() {
-        return  element + ":" + (left != null ? 'L' : ".") + (right != null ? 'R' : "." + height);
+        return  element + ":" + (left != null ? "L" : ".") + (right != null ? "R" : ".") + height;
     }
 }
