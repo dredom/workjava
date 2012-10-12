@@ -1,4 +1,4 @@
-package com.dredom;
+package com.dredom.basics;
 
 import junit.framework.Test;
 import junit.framework.TestCase;
