@@ -1,10 +1,13 @@
 package com.dredom.json;
 
+import java.util.Map;
+
 public class SubCat {
 
 	private Integer id;
 	private String name;
 	private Integer categoryId;
+	private Map<String, String> map;
 
 	public Integer getId() {
 		return id;
@@ -23,6 +26,12 @@ public class SubCat {
 	}
 	public void setCategoryId(Integer categoryId) {
 		this.categoryId = categoryId;
+	}
+	public Map<String, String> getMap() {
+		return map;
+	}
+	public void setMap(Map<String, String> map) {
+		this.map = map;
 	}
 
 }

@@ -3,6 +3,7 @@ package com.dredom.json;
 import java.util.List;
 
 public class Category {
+	public static String TAG = "tag";
 
 	private Integer id;
 	private String name;
