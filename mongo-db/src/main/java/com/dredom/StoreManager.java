@@ -3,11 +3,11 @@
  */
 package com.dredom;
 
-import com.mongodb.BasicDBObject;
+import net.vz.mongodb.jackson.JacksonDBCollection;
+import net.vz.mongodb.jackson.WriteResult;
+
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
-import com.mongodb.DBObject;
-import com.mongodb.WriteResult;
 
 /**
  * @author auntiedt
@@ -18,25 +18,15 @@ public class StoreManager {
 	private MongoManager mongoManager;
 
 	public StoreCollection get(String id) {
-		DBCollection coll = getCollection();
-		BasicDBObject query = new BasicDBObject("_id", id);
-		DBObject obj = coll.findOne(query);
-		if (obj == null) {
-			return null;
-		}
-		BasicDBObject result = (BasicDBObject) obj;
-		StoreCollection out = new StoreCollection();
-		out.setId(result.getString("_id"));
-		out.setName(result.getString("name"));
-		return out;
+		JacksonDBCollection<StoreCollection, String> coll = getCollection();
+		StoreCollection obj = coll.findOneById(id);
+		return obj;
 	}
 
 	public void add(StoreCollection store) throws Exception {
-		DBCollection coll = getCollection();
-		BasicDBObject doc = new BasicDBObject(
-				"_id", store.getId())
-				.append("name", store.getName());
-		WriteResult result = coll.insert(doc);
+		JacksonDBCollection<StoreCollection, String> coll = getCollection();
+
+		WriteResult<StoreCollection, String> result = coll.insert(store);
 		if (result.getError() != null) {
 			System.err.format("insert %s[%s] failed: %s\n", COLLECTION, store.getId(), result.getError());
 			throw new Exception(result.getError());
@@ -44,9 +34,8 @@ public class StoreManager {
 	}
 
 	public boolean delete(String id) {
-		DBCollection coll = getCollection();
-		BasicDBObject query = new BasicDBObject("_id", id);
-		WriteResult result = coll.remove(query);
+		JacksonDBCollection<StoreCollection, String> coll = getCollection();
+		WriteResult<StoreCollection, String> result = coll.removeById(id);
 		if (result.getError() != null) {
 			System.err.format("delete %s[%s] failed: %s\n", COLLECTION, id, result.getError());
 			return false;
@@ -54,9 +43,11 @@ public class StoreManager {
 		return true;
 	}
 
-	private DBCollection getCollection() {
+	private JacksonDBCollection<StoreCollection, String> getCollection() {
 		DB db = mongoManager.getDb();
-		return db.getCollection(COLLECTION);
+		DBCollection coll = db.getCollection(COLLECTION);
+		return JacksonDBCollection.wrap(coll, StoreCollection.class, String.class);
+
 	}
 
 	public void setMongoManager(MongoManager mongoManager) {

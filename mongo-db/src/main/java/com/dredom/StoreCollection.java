@@ -1,7 +1,10 @@
 package com.dredom;
 
+import javax.persistence.Id;
+
 public class StoreCollection {
 
+	@Id
 	private String id;
 	private String name;
 	private Geo geo;

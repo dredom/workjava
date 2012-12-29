@@ -20,6 +20,11 @@
       <version>2.10.1</version>
     </dependency>
     <dependency>
+	  <groupId>net.vz.mongodb.jackson</groupId>
+	  <artifactId>mongo-jackson-mapper</artifactId>
+	  <version>1.4.2</version>
+	</dependency>
+    <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>
       <version>4.11</version>

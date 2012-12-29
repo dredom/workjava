@@ -41,6 +41,8 @@ public class StoreManagerTest {
 	public void add() throws Exception {
 		final String id = "BB";
 		final String name = "Geronimo";
+		final double latitude = -33.857639;
+		final double longitude = 151.214706;
 
 		StoreManager manager = new StoreManager();
 		manager.setMongoManager(mongoManager);
@@ -51,6 +53,10 @@ public class StoreManagerTest {
 		StoreCollection in = new StoreCollection();
 		in.setId(id);
 		in.setName(name);
+		Geo geo = new Geo();
+		geo.setLatitude(latitude);
+		geo.setLongitude(longitude);
+		in.setGeo(geo);
 
 		manager.add(in);
 
