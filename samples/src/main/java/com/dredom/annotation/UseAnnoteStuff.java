@@ -32,6 +32,9 @@ public class UseAnnoteStuff {
 				for (Annotation mannote : mannotes) {
 					System.out.println(mannote.toString());
 					out.format("%s, ", mannote);
+					if (mannote instanceof AnnoteStuff) {
+					    out.format("AnnoteStuff stuffy=%s", ((AnnoteStuff)mannote).stuffy());
+					}
 				}
 				out.println("]");
 			}
