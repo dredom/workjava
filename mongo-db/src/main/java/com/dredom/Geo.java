@@ -1,7 +1,8 @@
 package com.dredom;
 
 /**
- * Geo location in decimal degrees.
+ * Geographic location in decimal degrees.
+ * This is used when searching for stores in any area.
  *
  * @author Andre Untiedt
  *
