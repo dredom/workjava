@@ -3,11 +3,17 @@
  */
 package com.dredom;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import net.vz.mongodb.jackson.JacksonDBCollection;
 import net.vz.mongodb.jackson.WriteResult;
 
+import com.mongodb.BasicDBObject;
 import com.mongodb.DB;
 import com.mongodb.DBCollection;
+import com.mongodb.DBObject;
+import com.mongodb.QueryBuilder;
 
 /**
  * @author auntiedt
@@ -41,6 +47,20 @@ public class StoreManager {
 			return false;
 		}
 		return true;
+	}
+
+	public StoreCollection findByName(String name) {
+        JacksonDBCollection<StoreCollection, String> coll = getCollection();
+        DBObject ref = QueryBuilder.start("name_lc")
+               .is(name.toLowerCase())
+               .get();
+        Map<String, Integer> returnFields = new HashMap<String, Integer>();
+        returnFields.put("name", 1);
+        returnFields.put("geo", 1);
+        returnFields.put("tag", 1);
+        DBObject fields = new BasicDBObject(returnFields);
+        StoreCollection obj = coll.findOne(ref, fields);
+        return obj;
 	}
 
 	private JacksonDBCollection<StoreCollection, String> getCollection() {

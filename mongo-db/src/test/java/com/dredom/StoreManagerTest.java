@@ -8,12 +8,12 @@ import org.junit.Test;
 
 /**
  * CRUD for "store" collection.
- * @author auntiedt
+ * @author  Andre Untiedt
  *
  */
 public class StoreManagerTest {
 
-	static final String CONNECTION_STRING = "mongodb://localhost/testdb";
+	static final String CONNECTION_STRING = "mongodb://localhost/test";
 
 	MongoManager mongoManager;
 
@@ -93,5 +93,42 @@ public class StoreManagerTest {
 		result = manager.get(id);
 		assertNull(result);
 	}
+
+    @Test
+    public void findByName() throws Exception {
+        final String id = "DD";
+        final String name = "Cochise";
+        final double latitude = -33.857644;
+        final double longitude = 151.214777;
+
+        StoreManager manager = new StoreManager();
+        manager.setMongoManager(mongoManager);
+
+        // cleanup
+        manager.delete(id);
+
+        StoreCollection in = new StoreCollection();
+        in.setId(id);
+        in.setName(name);
+        Geo geo = new Geo();
+        geo.setLatitude(latitude);
+        geo.setLongitude(longitude);
+        in.setGeo(geo);
+        in.setName_lc(name.toLowerCase());
+        in.setTag(new String[] { "buy", "sell" });
+
+        manager.add(in);
+
+        StoreCollection result = manager.findByName(name);
+        assertNotNull(result);
+//        assertEquals(null, result.getId());
+        assertEquals(name, result.getName());
+        assertNotNull(result.getGeo());
+        assertNotNull(result.getTag());
+
+        StoreCollection result2 = manager.findByName(name.toLowerCase());
+        assertNotNull(result2);
+
+    }
 
 }
