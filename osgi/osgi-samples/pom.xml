@@ -1,0 +1,43 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <groupId>com.dredom.osgi</groupId>
+    <artifactId>osgi-parent-pom</artifactId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <artifactId>osgi-samples</artifactId>
+  <packaging>bundle</packaging>
+
+  <name>osgi-samples</name>
+  <url>http://maven.apache.org</url>
+  <description>Sample OSGi code</description>
+
+  <dependencies>
+      <dependency>
+          <groupId>com.dredom.osgi</groupId>
+          <artifactId>osgi-dictionary</artifactId>
+          <version>${project.version}</version>
+      </dependency>
+  </dependencies>
+  
+  <build>
+      
+  <plugins>
+    <plugin>
+      <groupId>org.apache.felix</groupId>
+      <artifactId>maven-bundle-plugin</artifactId>
+      <configuration>
+        <instructions>
+          <Export-Package>com.dredom.osgi.api</Export-Package>
+          <Bundle-SymbolicName>${project.groupId}.${project.artifactId}</Bundle-SymbolicName>
+          <Private-Package>com.dredom.osgi.impl</Private-Package>
+          <Bundle-Activator>com.dredom.osgi.impl.OsgiActivator</Bundle-Activator>
+        </instructions>
+      </configuration>
+    </plugin>
+  </plugins>
+  </build>
+</project>
