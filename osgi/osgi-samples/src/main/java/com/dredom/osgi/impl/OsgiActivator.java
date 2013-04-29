@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
+import org.osgi.framework.Constants;
 import org.osgi.framework.InvalidSyntaxException;
 import org.osgi.framework.ServiceEvent;
 import org.osgi.framework.ServiceListener;
@@ -48,7 +49,7 @@ public class OsgiActivator implements BundleActivator, ServiceListener {
         // dictionary service, if one exists.
         synchronized (this) {
         	// Listen for events pertaining to dictionary services.
-        	String filterListen = "(&(objectClass=" + DictionaryService.class.getName() + ")"
+        	String filterListen = "(&(" + Constants.OBJECTCLASS + "=" + DictionaryService.class.getName() + ")"
         			+ "(Language=*))";
         	context.addServiceListener(this, filterListen);
 
