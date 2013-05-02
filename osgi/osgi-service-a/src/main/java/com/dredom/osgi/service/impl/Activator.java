@@ -1,7 +1,6 @@
 package com.dredom.osgi.service.impl;
 
 import java.util.Dictionary;
-import java.util.Hashtable;
 
 import org.osgi.framework.BundleActivator;
 import org.osgi.framework.BundleContext;
@@ -15,6 +14,10 @@ import com.dredom.osgi.service.api.HelloService;
 
 /**
  * Uses ...
+ * Testing with
+ *  /apps/geometrixx/components/homepage/content.jsp
+ *
+ * Question: Is this Activator even needed if the service has annotations for Component and Service?
  *
  */
 public class Activator implements BundleActivator {
@@ -26,6 +29,7 @@ public class Activator implements BundleActivator {
     // Registration of Hello service
     private ServiceRegistration registration;
 
+	@Override
 	public void start(BundleContext bundleContext) throws Exception {
 		System.out.println("Starting service #hello");
 
@@ -56,6 +60,7 @@ public class Activator implements BundleActivator {
 //		filter = null;
 	}
 
+	@Override
 	public void stop(BundleContext context) throws Exception {
 		// Automatically unregistered.
 		tracker.close();
@@ -69,17 +74,20 @@ public class Activator implements BundleActivator {
 	 */
 	private class Customizer implements ServiceTrackerCustomizer {
 
+		@Override
 		public Object addingService(ServiceReference reference) {
 			Dictionary<String, String> props = null;
 			registration = context.registerService(HelloService.class.getName(), new HelloServiceImpl(), props);
 			return context.getService(reference);
 		}
 
+		@Override
 		public void modifiedService(ServiceReference reference, Object service) {
 			// TODO Auto-generated method stub
 
 		}
 
+		@Override
 		public void removedService(ServiceReference reference, Object service) {
 			registration.unregister();
 			registration = null;
