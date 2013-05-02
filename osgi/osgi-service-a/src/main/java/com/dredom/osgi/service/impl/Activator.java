@@ -23,17 +23,17 @@ import com.dredom.osgi.service.api.HelloService;
 public class Activator implements BundleActivator {
 
 	// Bundle context
-	private BundleContext context = null;
+	private BundleContext context;
 	// Service tracker
 	private ServiceTracker tracker;
     // Registration of Hello service
     private ServiceRegistration registration;
 
 	@Override
-	public void start(BundleContext bundleContext) throws Exception {
-		System.out.println("Starting service #hello");
+	public void start(BundleContext context) throws Exception {
+		this.context = context;
+		System.out.println("Starting " + context.getBundle().getSymbolicName());
 
-		this.context = bundleContext;
 
 		// Create a service tracker to monitor dictionary service.
 //    	String filter = "(" +
@@ -65,7 +65,8 @@ public class Activator implements BundleActivator {
 		// Automatically unregistered.
 		tracker.close();
 		tracker = null;
-		System.out.println("Stopped  service #hello.");
+		this.context = null;
+		System.out.println("Stopped " + context.getBundle().getSymbolicName());
 	}
 
 	/**
