@@ -12,33 +12,48 @@ public class UseAnnoteStuff {
 	/**
 	 * Do it.
 	 */
+//	@AnnoteStuff
 	@AnnoteStuff(stuffy = "Geronimo")
 	public void doit() {
-		System.out.println("Hello stuff");
+	    final class Local {};
+	    Method thisMethod = Local.class.getEnclosingMethod();
+	    String thisMethodName = thisMethod.getName();
+		System.out.println("method name = " + thisMethodName);
 
-		Annotation[] annotes = getClass().getAnnotations();
-
-		if (annotes.length > 0) {
-			out.print("Class: " + getClass().getName() + "[");
-			for (Annotation annote : annotes) {
-				System.out.print(annote.toString());
-			}
-			out.println("]");
-		}
-		for (Method method : getClass().getMethods() ) {
-			if (method.getAnnotations().length > 0) {
-				out.format(" Method %s [", method.getName());
-				Annotation[] mannotes = method.getAnnotations();
-				for (Annotation mannote : mannotes) {
-					System.out.println(mannote.toString());
-					out.format("%s, ", mannote);
-					if (mannote instanceof AnnoteStuff) {
-					    out.format("AnnoteStuff stuffy=%s", ((AnnoteStuff)mannote).stuffy());
-					}
-				}
-				out.println("]");
-			}
+		AnnoteStuff stuff = thisMethod.getAnnotation(AnnoteStuff.class);
+		if (stuff != null) {
+		    out.format("%s has annotation @AnnoteStuff(stuffy = %s) \n", thisMethodName, stuff.stuffy());
 		}
 
+		listAllAnnotations();
+
+	}
+
+	@Deprecated
+	public void listAllAnnotations() {
+	    out.println("All annotations:");
+       Annotation[] annotes = getClass().getAnnotations();
+
+        if (annotes.length > 0) {
+            out.print("Class: " + getClass().getName() + "[");
+            for (Annotation annote : annotes) {
+                System.out.print(annote.toString());
+            }
+            out.println("]");
+        }
+        for (Method method : getClass().getMethods() ) {
+            if (method.getAnnotations().length > 0) {
+                out.format(" Method %s [ \n", method.getName());
+                Annotation[] mannotes = method.getAnnotations();
+                for (Annotation mannote : mannotes) {
+                    out.format("%s, ", mannote);
+                    if (mannote instanceof AnnoteStuff) {
+                        out.format("AnnoteStuff stuffy=%s", ((AnnoteStuff)mannote).stuffy());
+                    }
+                    out.println();
+                }
+                out.println("]");
+            }
+        }
 	}
 }
