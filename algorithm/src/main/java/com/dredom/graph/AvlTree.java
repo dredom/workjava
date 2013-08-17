@@ -3,7 +3,9 @@ package com.dredom.graph;
 import static java.lang.System.out;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 
 // Balanced BinarySearchTree class
@@ -257,22 +259,33 @@ public class AvlTree<E extends Comparable<?>> {
         ArrayDeque<AvlNode<E>> queue = new ArrayDeque<AvlNode<E>>();
         queue.add(root);
         int level = 0;
+        int height = root.height;
+        // Create print list for next level as we process nodes.
+        List<String> printList = new ArrayList<String>();
+        printList.add(root.toString());
         while(queue.isEmpty() == false) {
             out.printf(" %3d: ", level);
-            Iterator<AvlNode<E>> iter = queue.iterator();
-            while (iter.hasNext()) {
-                AvlNode<E> node = iter.next();
-                for (int i = 0; i < node.height; i++) out.print(' ');
-                out.printf(" %6s", node);
+            for (int i = 0; i <= (height - level - 1); i++) {   // spacing
+                out.printf("%4s", " ");
             }
+            for (String item : printList) {
+                out.printf(" %6s ", item);
+            }
+            printList = new ArrayList<String>();
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 AvlNode<E> node = queue.removeFirst();
                 if (node.left != null) {
                     queue.add(node.left);
+                    printList.add(node.left.toString());
+                } else {
+                    printList.add("      ");
                 }
                 if (node.right != null) {
                     queue.add(node.right);
+                    printList.add(node.right.toString());
+                } else {
+                    printList.add("      ");
                 }
             }
             out.println();
