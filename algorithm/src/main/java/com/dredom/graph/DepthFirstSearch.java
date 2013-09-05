@@ -9,7 +9,8 @@ import java.util.List;
 
 /**
  *   The depth first search (DFS) is well geared towards problems where we want to
- *   find any solution to the problem (not necessarily the shortest path), or to visit all of the nodes in the graph.
+ *   find any solution to the problem (not necessarily the shortest path), or to 
+ *   visit all of the nodes in the graph.
  * <p>
  * Problem based on graphics fill requirement.
  * <p>
