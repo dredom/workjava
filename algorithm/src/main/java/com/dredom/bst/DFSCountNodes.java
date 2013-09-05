@@ -6,16 +6,10 @@ import java.util.ArrayDeque;
 import java.util.Iterator;
 
 /**
- * Binary Search Tree handling.
- * Finds the largest subtree - presumably in preparation for operations that balance the tree.
- * Can handle large data.
- * Memory requirements are proportional to the greatest width of the tree.
- *
- * <p>I advise programmers to use open source tools to do stuff like this
- * rather than reinventing the wheel, but the assumption here is
- * we want to have some fun for the interview process.
- *
- * <p>Note: Love nulls. Super fast, minimize GC, intuitive.
+ * DFS - Depth-First Search example.
+ * 
+ * DFS is good for when you need to visit all nodes and 
+ * and memory usage is not a concern.
  *
  * <pre>
  *        5
@@ -25,7 +19,7 @@ import java.util.Iterator;
  *   1     6
  * </pre>
  *
- * @author  Andre Untiedt, 2013-08
+ * @author  Andre Untiedt, 2013-09
  */
 public class DFSCountNodes {
 
