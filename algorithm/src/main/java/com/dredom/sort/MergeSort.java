@@ -3,15 +3,15 @@ package com.dredom.sort;
 import static java.lang.System.out;
 
 /**
- *  Merge sort works recursively.
+ *  Merge sort works recursively. Divide and conquer algorithm.
  *  First it divides a data set in half, and sorts each half separately.
  *  Next, the first elements from each of the two lists are compared.
  *  The lesser element is then removed from its list and added to the final result list.
  */
 public class MergeSort {
 
-    static int[] array = { 21, 3, 1, 11, 5, 2, 7 };
-//    static int[] array = { 21, 3, 1};
+//    static int[] array = { 21, 3, 1, 11, 5, 2, 7 };
+    static int[] array = { 21, 3, 1};
     static Integer[] ia = {};
 
     /**

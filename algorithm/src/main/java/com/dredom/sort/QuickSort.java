@@ -5,6 +5,21 @@ import static java.lang.System.out;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * QuickSort is a divide-and-conquer algorithm.
+ * 
+ * function quicksort('array')
+ * 		if length('array') ≤ 1
+ *      	return 'array'  // an array of zero or one elements is already sorted
+ *      select and remove a pivot element 'pivot' from 'array'  // see 'Choice of pivot' below
+ *      create empty lists 'less' and 'greater'
+ *      for each 'x' in 'array'
+ *      	if 'x' ≤ 'pivot' then append 'x' to 'less'
+ *          else append 'x' to 'greater'
+ *      return concatenate(quicksort('less'), list('pivot'), quicksort('greater')) // two recursive calls
+ *      
+ *
+ */
 public class QuickSort {
 
     static Integer[] array = { 21, 3, 1, 11, 5, 2, 7 };
