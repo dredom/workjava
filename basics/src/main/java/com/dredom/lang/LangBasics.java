@@ -17,6 +17,7 @@ import static java.lang.System.out;
 public class LangBasics {
 
 	public static void main(String[] args) {
+		out.println(args.length);
 		out.println(" 10 to the power of 2 = 10E2");
 		out.printf(" 10E0 = %f \t Math.pow(10, 0) \n", Math.pow(10, 0));
 		out.printf(" 10E1 = %f \n", Math.pow(10, 1));
@@ -38,6 +39,7 @@ public class LangBasics {
 		out.println(" ^  XOR");
 		out.println(" |  OR");
 		out.printf(" 5 %% 2 = remainder %d \n", 5 % 2);
+		out.printf(" Long.MAX_VALUE =  %E \n", Long.MAX_VALUE * 1.0);
 	}
 
 }

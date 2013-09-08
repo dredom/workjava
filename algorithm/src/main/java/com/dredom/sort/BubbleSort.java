@@ -2,6 +2,10 @@ package com.dredom.sort;
 
 import static java.lang.System.out;
 
+/**
+ * Time:   O(n^2)
+ * Space:  O(1)
+ */
 public class BubbleSort {
 
     static int[] array = { 3, 1, 5, 2, 7 };

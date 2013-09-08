@@ -7,6 +7,9 @@ import static java.lang.System.out;
  *  First it divides a data set in half, and sorts each half separately.
  *  Next, the first elements from each of the two lists are compared.
  *  The lesser element is then removed from its list and added to the final result list.
+ * <p>
+ * Time average & worst:   O(n log(n))   - n * log(n)
+ * Space:  O(n)
  */
 public class MergeSort {
 
