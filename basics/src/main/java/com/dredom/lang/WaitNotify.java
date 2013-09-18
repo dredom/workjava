@@ -2,6 +2,10 @@ package com.dredom.lang;
 
 import static java.lang.System.out;
 
+/**
+ * The thread must own the object's monitor (synchronized)
+ * for wait or notify.
+ */
 public class WaitNotify {
 
     private String value;
