@@ -4,7 +4,7 @@ import static java.lang.System.out;
 
 /**
  * The thread must own the object's monitor (synchronized)
- * for wait or notify.
+ * for Object wait or notify.
  */
 public class WaitNotify {
 
@@ -19,7 +19,7 @@ public class WaitNotify {
     }
 
     // Test
-    public static void main(String[] args) {
+    public static void main(String[] args) throws InterruptedException {
         final WaitNotify wn = new WaitNotify();
         wn.setValue("START");
         Runnable t1 = new Runnable() {
@@ -49,9 +49,14 @@ public class WaitNotify {
                 }
                 wn.setValue("Thread #2");
             }
-        };
-        new Thread(t2).start();
-        new Thread(t1).start();
+        }; 
+        Thread thread1 = new Thread(t1);
+        Thread thread2 = new Thread(t2);
+        thread2.start();
+        thread1.start();
         out.printf("After starts... value=%s \n", wn.getValue());
+        thread2.join();
+        thread1.join();
+        out.printf("All done... value=%s \n", wn.getValue());
     }
 }
