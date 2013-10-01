@@ -48,7 +48,9 @@
       
     <pluginManagement>
       <plugins>
-        <!-- Define Jetty plugin with boilerplate configuration that can be overridden. -->
+        <!-- mvn jetty:run-war
+            Due to the way JSF expects WEB-INF/classes/ dir. 
+            -->
         <plugin>
           <groupId>org.mortbay.jetty</groupId>
           <artifactId>maven-jetty-plugin</artifactId>

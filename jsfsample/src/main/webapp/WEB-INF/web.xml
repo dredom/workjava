@@ -20,4 +20,9 @@
         <servlet-name>Faces Servlet</servlet-name>
         <url-pattern>*.jsf</url-pattern>
     </servlet-mapping>
+    
+    <!-- Need this for JSF to work because Jetty has lazy initialization. -->
+    <listener> 
+        <listener-class>com.sun.faces.config.ConfigureListener</listener-class> 
+    </listener>`
 </web-app>
