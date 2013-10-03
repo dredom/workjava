@@ -11,8 +11,9 @@
 <h:body>
 	<h3>JSF 2.0 Hello World Example - hello.xhtml</h3>
 	<h:form>
-		<h:inputText value="#{welcomeBean.name}"></h:inputText>
+		<h:inputText id="hw-name" value="#{welcomeBean.name}" required="true"></h:inputText>
 		<h:commandButton value="Welcome Me" action="welcome"></h:commandButton>
 	</h:form>
+	<h:message for="hw-name" showSummary="true"/>
 </h:body>
 </html>
