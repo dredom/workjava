@@ -3,13 +3,17 @@ package com.dredom.lang;
 import static java.lang.System.out;
 
 public class ProducerConsumer {
-    static final int TIMES = 10;
+    static final int TIMES = 7;
 
+    /**
+     * Value container used by both producer and consumer.
+     */
     static class Val {
         int value;
         boolean gotvalue;
+
         public synchronized void set(int value) {
-            if (gotvalue) {
+            while (gotvalue) {
                 try {
                     wait();
                 } catch (InterruptedException e) {
@@ -21,8 +25,14 @@ public class ProducerConsumer {
             this.gotvalue = true;
             notify();
         }
+
+        /**
+         * Note: Always invoke wait inside a loop that tests for the condition being waited for.
+         * Don't assume that the interrupt was for the particular condition you were waiting for,
+         * or that the condition is still true.
+         */
         public synchronized int get() {
-            if (!gotvalue) {
+            while (!gotvalue) {
                 try {
                     wait();
                 } catch (InterruptedException e) {
@@ -37,6 +47,9 @@ public class ProducerConsumer {
         }
     }
 
+    /**
+     * Producer
+     */
     static class Producer implements Runnable {
         final Val container;
         public Producer(Val container) {
@@ -44,12 +57,15 @@ public class ProducerConsumer {
         }
         public void run() {
             for (int i = 1; i <= TIMES; i++) {
-                out.println("producing " + i);
                 container.set(i);
+                out.println("produced " + i);
             }
         }
     }
 
+    /**
+     * Consumer
+     */
     static class Consumer implements Runnable {
         final Val container;
         public Consumer(Val container) {
@@ -62,6 +78,7 @@ public class ProducerConsumer {
             }
         }
     }
+
     /**
      * @param args
      */
