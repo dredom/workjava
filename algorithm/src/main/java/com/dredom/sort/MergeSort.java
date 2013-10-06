@@ -2,6 +2,8 @@ package com.dredom.sort;
 
 import static java.lang.System.out;
 
+import java.util.Arrays;
+
 /**
  *  Merge sort works recursively. Divide and conquer algorithm.
  *  First it divides a data set in half, and sorts each half separately.
@@ -13,63 +15,52 @@ import static java.lang.System.out;
  */
 public class MergeSort {
 
-//    static int[] array = { 21, 3, 1, 11, 5, 2, 7 };
-    static int[] array = { 21, 3, 1};
-    static Integer[] ia = {};
+    static int[] array = { 21, 3, 1, 11, 5, 2, 7 };
+//    static int[] array = { 21, 3, 1};
 
     /**
      * @param args
      */
     public static void main(String[] args) {
-        print(array);
-        long start = System.currentTimeMillis();
-        for (int i = 0; i < 1000; i++) {
+        out.printf(" IN: %s \n", Arrays.toString(array));
+        long start = System.nanoTime();
 
-            sort(array);
-        }
-        out.println(System.currentTimeMillis() - start + "ms");
+        int[] result = sort(array);
+
+        long time = System.nanoTime() - start;
+
+        out.printf("OUT: %s  in %,d nanonseconds \n", Arrays.toString(result), time );
     }
 
-    static int[] sort(int[] input) {
-        if (input.length == 1) {
-            return input;
-        }
-        int middle = input.length / 2;
-        int[] left = sort(subArray(input, 0, middle));
-        int[] right = sort(subArray(input, middle, input.length - middle));
-        int[] result = new int[input.length];
-        int di = 0;
-        int li = 0;
-        int ri = 0;
-        // merge
-        while (di < input.length) {
-            if (li == left.length) {
-                result[di] = right[ri++];
-            } else if (ri == right.length) {
-                result[di] = left[li++];
-            } else if (left[li] < right[ri]) {
-                result[di] = left[li++];
-            } else {
-                result[di] = right[ri++];
-            }
-            di++;
-        }
-        return result;
-    }
+	static int[] sort(int[] nums) {
+		if (nums.length == 1) {
+			return nums;
+		}
 
-    static int[] subArray(int[] src, int start, int length) {
-        int[] out = new int[length];
-        System.arraycopy(src, start, out, 0, length);
-        return out;
-    }
+		// Divide and sort
+		int mid = nums.length / 2;
+		int[] left = sort( copy(nums, 0, mid) );
+		int[] right = sort( copy(nums, mid, nums.length - mid) );
+		// Merge
+		int[] result = new int[nums.length];
+		for (int l = 0, r = 0, x = 0; x < result.length; x++) {
+			if (l >= left.length) {
+				result[x] = right[r++];
+			} else if (r >= right.length) {
+				result[x] = left[l++];
+			} else if (left[l] <= right[r]) {
+				result[x] = left[l++];
+			} else {
+				result[x] = right[r++];
+			}
+		}
+		return result;
+	}
 
-
-    static void print(int[] arr) {
-        out.print('[');
-        for (int i = 0; i < arr.length; i++) {
-            out.printf(" %d,", arr[i]);
-        }
-        out.println(']');
-    }
+	private static int[] copy(int[] in, int start, int length) {
+		int[] out = new int[length];
+		System.arraycopy(in, start, out, 0, length);
+		return out;
+	}
 
 }
