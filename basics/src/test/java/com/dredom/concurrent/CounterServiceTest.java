@@ -17,6 +17,7 @@ public class CounterServiceTest {
 	public void getTopWord() throws Exception {
 		for (int i = 0; i < DATA.length; i++) {
 			String text = DATA[i][0];
+			System.out.printf("TEST: %s \n", text);
 			String expectedWord = DATA[i][1];
 			int expectedCount = Integer.parseInt(DATA[i][2]);
 
