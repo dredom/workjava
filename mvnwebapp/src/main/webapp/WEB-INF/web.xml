@@ -9,11 +9,19 @@
   <display-name>My Web Application</display-name>
   <description>Archetype Created Web Application</description>
   <servlet>
-  	<servlet-name>MyServlet</servlet-name>
+  	<servlet-name>HelloServlet</servlet-name>
   	<servlet-class>com.dredom.webapp.HelloServlet</servlet-class>
   </servlet>
+  <servlet>
+  	<servlet-name>JspSampleServlet</servlet-name>
+  	<servlet-class>com.dredom.webapp.JspSampleServlet</servlet-class>
+  </servlet>
   <servlet-mapping>
-  	<servlet-name>MyServlet</servlet-name>
-  	<url-pattern>/*</url-pattern>
+  	<servlet-name>HelloServlet</servlet-name>
+  	<url-pattern>/hello</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+  	<servlet-name>JspSampleServlet</servlet-name>
+  	<url-pattern>/jspsample</url-pattern>
   </servlet-mapping>
 </web-app>
