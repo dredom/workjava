@@ -15,5 +15,9 @@
 	  <li> pageContext.request.requestURL=${pageContext.request.requestURL} </li>
 	  <li> pageContext.request.serverName=${pageContext.request.serverName} </li>
 	</ul>
+	<!-- TESTING -->
+	<hr/>
+<c:set var="myvar" value="ABCD" />
+	<p>JSTL variable + text: <c:out value="${myvar} is alphabetical." /> </p>
 </body>
 </html>
