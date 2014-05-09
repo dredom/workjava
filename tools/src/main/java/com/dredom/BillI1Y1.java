@@ -1,4 +1,7 @@
-
+/**
+ * eDocs Billing table I_1_Y1 - non-null fields only.
+ * For Loading data from XML file in DBUnit format.
+ * /
 @XmlAccessorType(XmlAccessType.FIELD)
 public class BillI1Y1 {
 
