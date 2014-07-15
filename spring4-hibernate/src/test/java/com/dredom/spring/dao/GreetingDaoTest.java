@@ -1,6 +1,7 @@
 package com.dredom.spring.dao;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -43,6 +44,7 @@ public class GreetingDaoTest {
 		Integer rid = result.getId();
 		String greeting = result.getGreeting();
 		int version = result.getVersion();
-		System.out.printf("id=%s,greeting=%s,version=%s \n", rid, greeting, version);
+		Timestamp created = result.getCreated();
+		System.out.printf("id=%s,greeting=%s,version=%s, created=%s \n", rid, greeting, version, created );
 	}
 }

@@ -1,5 +1,7 @@
 package com.dredom.spring.model;
 
+import java.sql.Timestamp;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
@@ -15,6 +17,9 @@ public class Greeting extends AbstractEntity<Integer> {
 	@Version
 	private int version;
 
+	private Timestamp updated;
+	private Timestamp created;
+
 	public String getGreeting() {
 		return greeting;
 	}
@@ -29,6 +34,22 @@ public class Greeting extends AbstractEntity<Integer> {
 
 	public void setVersion(int version) {
 		this.version = version;
+	}
+
+	public Timestamp getUpdated() {
+		return updated;
+	}
+
+	public void setUpdated(Timestamp updated) {
+		this.updated = updated;
+	}
+
+	public Timestamp getCreated() {
+		return created;
+	}
+
+	public void setCreated(Timestamp created) {
+		this.created = created;
 	}
 
 }

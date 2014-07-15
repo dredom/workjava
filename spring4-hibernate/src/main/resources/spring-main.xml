@@ -17,9 +17,12 @@
         http://www.springframework.org/schema/util/spring-util.xsd">
 
     <context:property-placeholder location="classpath:config/main.properties,db.properties" />
+    
+    <util:properties id="messages" location="classpath:messages.properties"/>
 
     <bean id="helloService" class="com.dredom.spring.HelloService">
-        <property name="greeting" value="${main.greeting}"/>
+        <property name="name" value="${main.name}"/>
+        <property name="messages" ref="messages"/>
     </bean>
 
 

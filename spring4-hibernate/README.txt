@@ -1,8 +1,10 @@
-- Spring Framework
-- Hibernate TODO
+- Spring Framework 4
+- Hibernate 4
 
 Sample of Spring configuration beans.
 Using ${my.key} values from loaded properties.
+
+Sample Hibernate DAO, @Entity.
 
 Strategy for having configuration outside of build.
 - Test includes properties in test/resources/

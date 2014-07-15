@@ -9,12 +9,12 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
  */
 public class Main {
 	private static String configLocation = "spring-main.xml";
-	private static String name = "Joe";
+	private static String greeting = "Hello";
 
 	public static void main(String[] args) {
 		System.out.println("Hello World!");
 		ApplicationContext context = new ClassPathXmlApplicationContext(configLocation );
 		HelloService service = context.getBean("helloService", HelloService.class);
-		service.greet(name);
+		service.greet(greeting);
 	}
 }
