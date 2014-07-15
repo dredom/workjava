@@ -12,3 +12,4 @@ Strategy for having configuration outside of build.
 Note: 
 java -cp $CP -jar mybuild.jar does NOT work.
 java -cp $CP com.dredom.Main  does honor -cp.
+    
