@@ -29,7 +29,8 @@ import java.util.Iterator;
  */
 public class BinarySearchTree {
 
-//    static int[] keys = { 1, 8, 2, 3, 5, 6, 9 };
+private static final String SPC = " .";
+	//    static int[] keys = { 1, 8, 2, 3, 5, 6, 9 };
 //    static int[] keys = { 5, 3, 6, 1, 2, 4 };
     static int[] keys = { 5, 3, 6, 1, 4, 11, 8, 9, 12 };
 //    static int[] keys = { 1, 2, 4, 5 };
@@ -50,7 +51,7 @@ public class BinarySearchTree {
         }
 
         out.println("=== FIND LARGEST BST SUBTREE ===");
-//        bst.printTree(root);
+        bst.printTree(root);
         out.println();
         Node largestSubtree = bst.findLargestSubtree(root);
         out.println("Largest Subtree:");
@@ -107,7 +108,7 @@ public class BinarySearchTree {
     }
 
     /**
-     * Doing a breadth-first approach with a queue.
+     * BFS: Doing a breadth-first approach with a queue.
      * This is slower than recursion but really helps with stack overflows
      * on super large data.
      * @param node possibly root
@@ -217,6 +218,15 @@ public class BinarySearchTree {
     }
 
     /**
+     * .......5
+     * ...3.......8
+     * .2...4...7...9
+     * 1.2.1.1.6......
+     *
+     * 21, 7, 3, 1 - not fibonacci 1, 1, 2, 3, 5, 8, 13
+     * Formula: lowerspacing * 2 + lowerspacing
+     * Template: [ls|vl|ls*2+1|vr]..
+     *
      * Visual representation is valuable in testing.
      * And, yes, I know this is not perfect.
      * @param root
@@ -225,32 +235,71 @@ public class BinarySearchTree {
         if (root == null) {
             return;
         }
+        final Node DUMMY = new Node(0);
+        DUMMY.setLeft(DUMMY);
+        DUMMY.setRight(DUMMY);
         int depth = findMaxDepth(root);
         ArrayDeque<Node> queue = new ArrayDeque<Node>();
         queue.add(root);
+
+        // Spacer width by level
+        final int[] spacer = new int[depth];
+        int ls = 0;
+        for (int i = depth - 1; i >= 0; i--) {
+        	spacer[i] = ls;
+        	ls = ls * 2 + 1;
+        }
+
+        final int vSize = 2;
         int level = 0;
-        while(queue.isEmpty() == false) {
+        while(queue.isEmpty() == false && depth > 0) {
             out.printf(" %3d: ", level);
-            for (int i = 0; i < depth; i++) out.print(" "); // spacer
+            boolean leftSide = true;
             Iterator<Node> iter = queue.iterator();
             while (iter.hasNext()) {
+            	// spacer
+            	if (leftSide) {
+            		printSpaces(spacer[level]); // spacer
+            	}
                 Node node = iter.next();
-                out.printf(" %3d", node.getKey());
-//                out.printf(" %6s", node);
+                // print value
+                if (node == DUMMY) {
+                	printSpaces(vSize);
+                } else {
+                	out.printf("%2d", node.getKey());
+                }
+                // If left side, print extra spacer.
+                if (leftSide) {
+                	printSpaces(spacer[level] + 1 + spacer[level]);
+                }
+                leftSide = leftSide ? false : true;
             }
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Node node = queue.removeFirst();
+//                if (node.getLeft() == DUMMY && node.getRight() == DUMMY) {
+//                	continue;
+//                }
                 if (node.getLeft() != null) {
                     queue.add(node.getLeft());
+                } else {
+                	// dummy node for spacing
+                	queue.add(DUMMY);
                 }
                 if (node.getRight() != null) {
                     queue.add(node.getRight());
+                } else {
+                	// dummy node for spacing
+                	queue.add(DUMMY);
                 }
             }
             out.println();
             level++;
             depth--;
         }
+    }
+
+    private void printSpaces(int n) {
+    	for (int i = 0; i < n; i++) out.print("."); // spacer
     }
 }

@@ -11,7 +11,7 @@ import java.util.Arrays;
 public class Fibonacci {
 
 	public static void main(String[] args) {
-		int i = 7;
+		int i = 9;
 		Fibonacci instance = new Fibonacci();
 		System.out.println(Arrays.toString(instance.get(i)));
 	}
