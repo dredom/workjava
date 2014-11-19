@@ -30,10 +30,13 @@ import java.util.Iterator;
 public class BinarySearchTree {
 
 private static final String SPC = " .";
-	//    static int[] keys = { 1, 8, 2, 3, 5, 6, 9 };
+//	    static int[] keys = { 1, 8, 2, 3, 5, 6, 9 };
 //    static int[] keys = { 5, 3, 6, 1, 2, 4 };
     static int[] keys = { 5, 3, 6, 1, 4, 11, 8, 9, 12 };
 //    static int[] keys = { 1, 2, 4, 5 };
+
+    final Node DUMMY = new Node(0);
+    final int vSize = 2;
 
     /**
      * Main
@@ -223,7 +226,7 @@ private static final String SPC = " .";
      * .2...4...7...9
      * 1.2.1.1.6......
      *
-     * 21, 7, 3, 1 - not fibonacci 1, 1, 2, 3, 5, 8, 13
+     * 21, 7, 3, 1 - not fibonacci 1, 1, 2, 3, 5, 8, 13, 21
      * Formula: lowerspacing * 2 + lowerspacing
      * Template: [ls|vl|ls*2+1|vr]..
      *
@@ -235,7 +238,6 @@ private static final String SPC = " .";
         if (root == null) {
             return;
         }
-        final Node DUMMY = new Node(0);
         DUMMY.setLeft(DUMMY);
         DUMMY.setRight(DUMMY);
         int depth = findMaxDepth(root);
@@ -247,10 +249,9 @@ private static final String SPC = " .";
         int ls = 0;
         for (int i = depth - 1; i >= 0; i--) {
         	spacer[i] = ls;
-        	ls = ls * 2 + 1;
+        	ls = ls * 2 + vSize;
         }
 
-        final int vSize = 2;
         int level = 0;
         while(queue.isEmpty() == false && depth > 0) {
             out.printf(" %3d: ", level);
@@ -263,23 +264,20 @@ private static final String SPC = " .";
             	}
                 Node node = iter.next();
                 // print value
-                if (node == DUMMY) {
-                	printSpaces(vSize);
-                } else {
-                	out.printf("%2d", node.getKey());
-                }
-                // If left side, print extra spacer.
-                if (leftSide) {
-                	printSpaces(spacer[level] + 1 + spacer[level]);
-                }
-                leftSide = leftSide ? false : true;
+                printNode(node);
+                if (iter.hasNext()) {
+					// If left side, print extra spacer.
+					if (leftSide) {
+						printSpaces(spacer[level] + vSize + spacer[level]);
+					} else {
+						printSpaces(depth * 2);
+					}
+				}
+				leftSide = leftSide ? false : true;
             }
             int size = queue.size();
             for (int i = 0; i < size; i++) {
                 Node node = queue.removeFirst();
-//                if (node.getLeft() == DUMMY && node.getRight() == DUMMY) {
-//                	continue;
-//                }
                 if (node.getLeft() != null) {
                     queue.add(node.getLeft());
                 } else {
@@ -301,5 +299,12 @@ private static final String SPC = " .";
 
     private void printSpaces(int n) {
     	for (int i = 0; i < n; i++) out.print("."); // spacer
+    }
+    private void printNode(Node node) {
+        if (node == DUMMY) {
+        	for (int i = 0; i < vSize; i++) out.print("_"); // spacer
+        } else {
+        	out.printf("%2d", node.getKey());
+        }
     }
 }
