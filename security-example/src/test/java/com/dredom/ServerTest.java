@@ -1,4 +1,4 @@
-package com.lvls;
+package com.dredom;
 
 import static java.lang.System.out;
 
@@ -10,7 +10,7 @@ import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
 import javax.crypto.spec.SecretKeySpec;
 
-import com.lvls.Server;
+import com.dredom.Server;
 
 public class ServerTest {
 

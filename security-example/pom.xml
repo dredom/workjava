@@ -13,9 +13,14 @@
 
   <dependencies>
     <dependency>
-      <groupId>org.bouncycastle</groupId>
+      <groupId>bouncycastle</groupId>
       <artifactId>bcprov-jdk16</artifactId>
-      <version>1.46</version>
+      <version>140</version>
+    </dependency>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.11</version>
     </dependency>
   </dependencies>
 </project>
