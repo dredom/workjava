@@ -18,6 +18,7 @@ import static java.lang.System.out;
  * <p>This version optimizes the summation of rectangles by progressive addition.
  *
  * @author auntiedt
+ * @version 3, 2014-12
  *
  */
 public class MaxSumInRectangle2 {
