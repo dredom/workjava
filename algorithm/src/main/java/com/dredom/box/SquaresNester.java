@@ -22,10 +22,14 @@ import java.util.List;
 public class SquaresNester {
 
 	public static void main(String[] args) {
-		int[] T1 = { 7, 3, 5, 2, 4 };
+		int[] T1 = {  3, 5, 2, 4 };
 		Deque<Square> list = new ArrayDeque<Square>();
-		for (int i : T1) {
-			list.push(new Square(i));
+//		for (int i : T1) {
+//			list.add(new Square(i));
+//		}
+		for (int i = 0; i < T1.length; i++) {
+			list.add(new Square(T1[i]));
+
 		}
 		SquaresNester sn = new SquaresNester();
 		Node n = sn.buildNodes(list, null);
@@ -33,9 +37,17 @@ public class SquaresNester {
 		List<Node> leafs = sn.getLeafs(n);
 		out.print("Leafs: ");
 		for (Node leaf : leafs) {
-			out.printf("[%s],", leaf);
+			out.printf("%s, ", leaf.getValue());
 		}
 		out.println();
+		out.println("Permutations:");
+		for (Node leaf : leafs) {
+			Deque<Square> permutation = sn.getAncestors(leaf);
+			while (! permutation.isEmpty()) {
+				out.printf(" %s >", permutation.pop());
+			}
+			out.println();
+		}
 	}
 	/**
 	 * All permutations of list. Recursive.
@@ -72,5 +84,15 @@ public class SquaresNester {
 			getAllLeafs(child, leafs);
 		}
 		return leafs;
+	}
+
+	Deque<Square> getAncestors(Node leaf) {
+		Deque<Square> ancestors = new ArrayDeque<Square>();
+		Node node = leaf;
+		do {
+			ancestors.push(node.getValue());
+			node = node.getParent();
+		} while (node != null);
+		return ancestors;
 	}
 }

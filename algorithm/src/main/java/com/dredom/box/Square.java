@@ -11,11 +11,13 @@ package com.dredom.box;
  */
 public class Square {
 	int volume;
+	int length;
 	public Square(int length) {
+		this.length = length;
 		this.volume = length * length;
 	}
 	@Override
 	public String toString() {
-		return String.valueOf(volume);
+		return String.valueOf(length);
 	}
 }
