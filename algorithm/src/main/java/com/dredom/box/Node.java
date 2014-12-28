@@ -23,7 +23,7 @@ public class Node {
 		if (children == null) {
 			children = new ArrayDeque<Node>();
 		}
-		children.push(child);
+		children.add(child);
 	}
 	public final Square getValue() {
 		return value;
@@ -36,6 +36,6 @@ public class Node {
 	}
 	@Override
 	public String toString() {
-		return "[" + value + ",P:" + parent + "," + (children == null ? 0 : children.size()) + "]";
+		return "[" + value + ",P:" + parent + "]";
 	}
 }

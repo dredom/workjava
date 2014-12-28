@@ -7,6 +7,7 @@ import static java.lang.System.out;
 
 import java.util.ArrayDeque;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Deque;
 import java.util.List;
 
@@ -23,6 +24,7 @@ public class SquaresNester {
 
 	public static void main(String[] args) {
 		int[] T1 = {  3, 5, 2, 4 };
+		out.println(Arrays.toString(T1));
 		Deque<Square> list = new ArrayDeque<Square>();
 //		for (int i : T1) {
 //			list.add(new Square(i));
@@ -32,7 +34,8 @@ public class SquaresNester {
 
 		}
 		SquaresNester sn = new SquaresNester();
-		Node n = sn.buildNodes(list, null);
+//		Node n = sn.buildNodes(list, null);
+		Node n = sn.buildNode(list, null);
 		out.println("Node=" + n);
 		List<Node> leafs = sn.getLeafs(n);
 		out.print("Leafs: ");
@@ -49,25 +52,52 @@ public class SquaresNester {
 			out.println();
 		}
 	}
+//	/**
+//	 * All permutations of list. Recursive.
+//	 * @param list
+//	 * @param parent
+//	 * @return Node
+//	 */
+//	Node buildNodes(Deque<Square> list, Node parent) {
+//		Square s = list.pop();
+//		Node n = new Node(s, parent);
+//		for (Square square : list) {
+//			Node child = new Node(square, n);
+//			if (list.size() > 1) {
+//				Deque<Square> newList = new ArrayDeque<Square>(list);
+//				newList.remove(square);
+//				for (int i = 1; i < list.size(); i++) {
+//					Deque<Square> goList = new ArrayDeque<Square>(newList);
+//					child.addChild(buildNodes(goList, child));
+//					// Shuffle order
+//					Square save = newList.removeFirst();
+//					newList.addLast(save);
+//				}
+//			}
+//			n.addChild(child);
+//		}
+//		return n;
+//	}
+
 	/**
 	 * All permutations of list. Recursive.
-	 * @param list
+	 * @param list to do permutations
 	 * @param parent
-	 * @return Node
+	 * @return Node with children permutations
 	 */
-	Node buildNodes(Deque<Square> list, Node parent) {
+	Node buildNode(Deque<Square> list, Node parent) {
+		out.printf("buildNode: %s \n", Arrays.deepToString(list.toArray()));
 		Square s = list.pop();
-		Node n = new Node(s, parent);
-		for (Square square : list) {
-			Node child = new Node(square, n);
-			if (list.size() > 1) {
-				Deque<Square> newList = new ArrayDeque<Square>(list);
-				newList.remove(square);
-				child.addChild(buildNodes(newList, n));
-			}
-			n.addChild(child);
+		Node ns = new Node(s, parent);
+		for (int i = 0; i < list.size(); i++) {
+
+			Square save = list.peek();
+			Node child = buildNode(list, ns);
+			list.add(save);
+
+			ns.addChild(child);
 		}
-		return n;
+		return ns;
 	}
 
 	List<Node> getLeafs(Node root) {
