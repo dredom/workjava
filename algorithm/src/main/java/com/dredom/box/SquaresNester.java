@@ -26,15 +26,12 @@ public class SquaresNester {
 		int[] T1 = {  3, 5, 2, 4 };
 		out.println(Arrays.toString(T1));
 		Deque<Square> list = new ArrayDeque<Square>();
-//		for (int i : T1) {
-//			list.add(new Square(i));
-//		}
+
 		for (int i = 0; i < T1.length; i++) {
 			list.add(new Square(T1[i]));
 
 		}
 		SquaresNester sn = new SquaresNester();
-//		Node n = sn.buildNodes(list, null);
 		Node n = sn.buildNode(list, null);
 		out.println("Node=" + n);
 		List<Node> leafs = sn.getLeafs(n);
@@ -52,32 +49,6 @@ public class SquaresNester {
 			out.println();
 		}
 	}
-//	/**
-//	 * All permutations of list. Recursive.
-//	 * @param list
-//	 * @param parent
-//	 * @return Node
-//	 */
-//	Node buildNodes(Deque<Square> list, Node parent) {
-//		Square s = list.pop();
-//		Node n = new Node(s, parent);
-//		for (Square square : list) {
-//			Node child = new Node(square, n);
-//			if (list.size() > 1) {
-//				Deque<Square> newList = new ArrayDeque<Square>(list);
-//				newList.remove(square);
-//				for (int i = 1; i < list.size(); i++) {
-//					Deque<Square> goList = new ArrayDeque<Square>(newList);
-//					child.addChild(buildNodes(goList, child));
-//					// Shuffle order
-//					Square save = newList.removeFirst();
-//					newList.addLast(save);
-//				}
-//			}
-//			n.addChild(child);
-//		}
-//		return n;
-//	}
 
 	/**
 	 * All permutations of list. Recursive.

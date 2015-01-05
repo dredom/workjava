@@ -34,10 +34,6 @@ import java.util.ArrayDeque;
  */
 public class BreadthFirstSearch {
 
-    static int gridlen = 20;
-
-    // [pAy][pAx] [pBy][pBx]
-    static boolean[][][][] visited = new boolean[gridlen][gridlen][gridlen][gridlen];
 
     static String[] board = {
         "....",
@@ -45,6 +41,7 @@ public class BreadthFirstSearch {
         "..B.",
         "...."
     };    // result 2
+    static int expectedTurns = 2;
 
 //            "XXXXXXXXX",
 //            "A...X...B",
@@ -56,7 +53,12 @@ public class BreadthFirstSearch {
 //            "XXXX.XXXX"
 //        };  // result 8
 
-    static int expectedTurns = 2;
+    static int gridlen = board.length;
+
+    // [pAy][pAx] [pBy][pBx]
+    static boolean[][][][] visited = new boolean[gridlen][gridlen][gridlen][gridlen];
+
+
 
     /**
      * The Node is used to "travel" the grid for both A and B, with new instances

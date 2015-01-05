@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  *   The depth first search (DFS) is well geared towards problems where we want to
- *   find any solution to the problem (not necessarily the shortest path), or to 
+ *   find any solution to the problem (not necessarily the shortest path), or to
  *   visit all of the nodes in the graph.
  * <p>
  * Problem based on graphics fill requirement.
@@ -20,16 +20,17 @@ import java.util.List;
  */
 public class DepthFirstSearch {
 
-    static int xlen = 600;
-    static int ylen = 400;
-//    static int xlen = 6;
-//    static int ylen = 4;
+//    static int xlen = 600;
+//    static int ylen = 400;
+    static int xlen = 6;
+    static int ylen = 4;
 
     static boolean[][] fill = new boolean[xlen][ylen];
 
     static String[] rectangles = {
-        "0 292 399 307",
+//        "0 292 399 307",
 //        "0 2 3 4",  // top, left, bottom, right
+        "0 2 2 4",  // top, left, bottom, right
 //        "0 192 399 207", "0 392 399 407", "120 0 135 599", "260 0 275 599",
     };
     static int[] expected = {
@@ -50,10 +51,10 @@ public class DepthFirstSearch {
      */
     public static void main(String[] args) {
         setup();
-//        print(fill);
+        print(fill);
         long start = System.currentTimeMillis();
         Integer[] results = search(fill);
-        out.println(Arrays.deepToString(results));
+        out.printf("Unfilled rectangle sizes: %s \n", Arrays.deepToString(results));
         out.println(System.currentTimeMillis() - start + "ms");
     }
 
@@ -117,7 +118,7 @@ public class DepthFirstSearch {
             Arrays.fill(fill[j], false);
         }
         for (String rectangle : rectangles) {
-            out.println(rectangle);
+            out.println("Filled rectangle: " + rectangle + "  (top, left, bottom, right)");
             String[] coords = rectangle.split(" ");
             int top = Integer.parseInt(coords[0]);
             int left = Integer.parseInt(coords[1]);
