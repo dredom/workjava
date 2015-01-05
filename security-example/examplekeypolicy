@@ -1,0 +1,9 @@
+/* AUTOMATICALLY GENERATED ON Mon Dec 08 21:59:41 PST 2014*/
+/* DO NOT EDIT */
+
+keystore "file:/home/andre/source/workjava/security-example/examplekeystore", "jks";
+
+grant signedBy "signFiles" {
+  permission java.io.FilePermission "/home/andre/source/workjava/*", "read";
+};
+

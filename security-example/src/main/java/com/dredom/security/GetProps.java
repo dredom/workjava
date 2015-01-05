@@ -1,9 +1,13 @@
 package com.dredom.security;
 
+/**
+ * Test reading properties w & w/out security manager.
+ *
+ * java -Djava.security.manager -cp target/classes/ com.dredom.security.GetProps
+ *
+ */
 public class GetProps {
     public static void main(String[] args) {
-
-        /* Test reading properties w & w/out security manager */
 
         String s;
 
@@ -28,6 +32,9 @@ public class GetProps {
 
             s = System.getProperty("java.home", "not specified");
             System.out.println("  Your JRE installation directory is: " + s);
+
+            s = System.getProperty("java.ext.dirs", "not specified");
+            System.out.println("  Your java.ext.dirs directory is: " + s);
 
 
         } catch (Exception e) {
