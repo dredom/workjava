@@ -18,6 +18,7 @@ import java.util.Arrays;
  * highest key is in the root node (this kind of heap is called max heap)
  * or the keys of parent nodes are less than or equal to those of the children and the
  * lowest key is in the root node (min heap).
+ * Not to be confused with a 'binary search tree' which is sorted and is not a heap.
  * <p>
  * Heapsort is a comparison-based sorting algorithm to create a sorted array (or list).
  * Although somewhat slower in practice on most machines than a well-implemented quicksort,
