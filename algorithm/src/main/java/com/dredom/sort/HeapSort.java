@@ -12,6 +12,13 @@ import java.util.Arrays;
  * - Swap heap max node with last, remove last.
  * - Re-heapify to make heap root the max again.
  * <p>
+ * Definition 'heap':
+ * In computer science, a heap is a specialized tree-based data structure that satisfies the heap property:
+ * Either the keys of parent nodes are always greater than or equal to those of the children and the
+ * highest key is in the root node (this kind of heap is called max heap)
+ * or the keys of parent nodes are less than or equal to those of the children and the
+ * lowest key is in the root node (min heap).
+ * <p>
  * Heapsort is a comparison-based sorting algorithm to create a sorted array (or list).
  * Although somewhat slower in practice on most machines than a well-implemented quicksort,
  * it has the advantage of a more favorable worst-case O(n log n) runtime.
@@ -46,7 +53,7 @@ public class HeapSort {
 
 	}
 
-	/* Function to build a heap */
+	/* heapify: create a heap out of given array of elements */
 	public static void heapify(int arr[]) {
 
 		// Start from middle; progress to left.
