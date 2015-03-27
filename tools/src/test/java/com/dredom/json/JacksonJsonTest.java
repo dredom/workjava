@@ -2,6 +2,7 @@ package com.dredom.json;
 
 import static org.junit.Assert.*;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -65,5 +66,14 @@ public class JacksonJsonTest {
 		assertNotNull(result);
 		assertTrue("empty", result.length() > 0);
 		System.out.println(result);
+	}
+
+	@Test
+	public void jsonStringToObject() throws Exception {
+	    String filePath = "src/test/resources/category_1.json";
+        File file = new File(filePath);
+
+        Category obj = service.toObject(file, Category.class);
+        System.out.println(obj);
 	}
 }
