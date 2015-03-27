@@ -1,0 +1,9 @@
+{
+ "id":1,
+ "name":"Jasonian",
+ "subCategories":[
+   {"id":2,"name":"Sub: Gina","categoryId":1,
+    "map":{"en":"English","es":"Spanish"}
+   }
+ ]
+}
