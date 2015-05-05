@@ -1,4 +1,4 @@
-package com.lvls.au.spring;
+package com.dredom.spring;
 
 import org.springframework.beans.factory.BeanFactory;
 import org.springframework.beans.factory.xml.XmlBeanFactory;

@@ -1,4 +1,4 @@
-package com.lvls.au.spring;
+package com.dredom.spring;
 
 import org.apache.log4j.Logger;
 

@@ -1,13 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <parent>
-    <groupId>com.lvlstudios</groupId>
-    <artifactId>lvlstudios-base</artifactId>
-    <version>1</version>
-  </parent>
 
-  <groupId>com.lvls.au</groupId>
+  <groupId>com.dredom.spring</groupId>
   <artifactId>mvnspring</artifactId>
   <version>1.0-SNAPSHOT</version>
   <packaging>jar</packaging>
@@ -48,10 +43,17 @@
 	  <version>3.0.4.RELEASE</version>
 	  <scope>test</scope>
 	</dependency>
+	<dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>4.12</version>
+	  <scope>test</scope>
+    </dependency>
   </dependencies>
   
   <build>
     <plugins>
+      <!-- mvn exec:java -->
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>exec-maven-plugin</artifactId>
@@ -65,7 +67,7 @@
         </executions>
  
         <configuration>
-          <mainClass>com.lvls.au.spring.App</mainClass>
+          <mainClass>com.dredom.spring.App</mainClass>
         </configuration>
       </plugin>
     </plugins>

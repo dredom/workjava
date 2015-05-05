@@ -3,7 +3,7 @@
    "http://www.springframework.org/dtd/spring-beans.dtd">
  
 <beans>
-  <bean id="hello" class="com.lvls.au.spring.SayHello">
+  <bean id="hello" class="com.dredom.spring.SayHello">
     <property name="name" value="Golden" />
     <property name="daytime" value="dawn"/>
   </bean>

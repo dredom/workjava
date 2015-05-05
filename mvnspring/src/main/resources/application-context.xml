@@ -7,7 +7,7 @@
 
   <context:property-placeholder location="classpath:${ENV:}/application.properties"/>
 
-  <bean id="hello" class="com.lvls.au.spring.SayHello">
+  <bean id="hello" class="com.dredom.spring.SayHello">
     <property name="name" value="Golden" />
     <property name="daytime" value="${daytime:Evening}"/>
   </bean>
