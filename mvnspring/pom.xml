@@ -13,23 +13,24 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <log4j.configuration>${base}/src/main/resources/log4j.properties</log4j.configuration>
+    <spring.version>4.1.6.RELEASE</spring.version>
   </properties>
 
   <dependencies>
     <dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-core</artifactId>
-	  <version>3.0.4.RELEASE</version>
+	  <version>${spring.version}</version>
     </dependency>
     <dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-beans</artifactId>
-	  <version>3.0.4.RELEASE</version>
+	  <version>${spring.version}</version>
 	</dependency>
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-context</artifactId>
-	  <version>3.0.4.RELEASE</version>
+	  <version>${spring.version}</version>
 	</dependency>
 	<dependency>
 	  <groupId>log4j</groupId>
@@ -40,7 +41,7 @@
 	<dependency>
 	  <groupId>org.springframework</groupId>
 	  <artifactId>spring-test</artifactId>
-	  <version>3.0.4.RELEASE</version>
+	  <version>${spring.version}</version>
 	  <scope>test</scope>
 	</dependency>
 	<dependency>
@@ -70,6 +71,64 @@
           <mainClass>com.dredom.spring.App</mainClass>
         </configuration>
       </plugin>
+      
+      <!-- Create executable jar with dependencies -->
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>1.4</version>
+        <executions>
+            <execution>
+                <phase>package</phase>
+                <goals>
+                    <goal>shade</goal>
+                </goals>
+                <configuration>
+                    <transformers>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                            <manifestEntries>
+                                <Main-Class>com.dredom.spring.App</Main-Class>
+                            </manifestEntries>
+                        </transformer>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/spring.handlers</resource>
+                        </transformer>
+                        <transformer implementation="org.apache.maven.plugins.shade.resource.AppendingTransformer">
+                            <resource>META-INF/spring.schemas</resource>
+                        </transformer>
+                    </transformers>
+                    <shadedArtifactAttached>true</shadedArtifactAttached>
+                    <shadedClassifierName>jar-with-dependencies</shadedClassifierName>
+                </configuration>
+            </execution>
+        </executions>
+      </plugin>
+      
+      <!-- Create executable jar with dependencies -->
+      <!-- 
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <archive>
+            <manifest>
+              <mainClass>com.dredom.spring.App</mainClass>
+            </manifest>
+          </archive>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase> 
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+      -->
     </plugins>
   </build>
 

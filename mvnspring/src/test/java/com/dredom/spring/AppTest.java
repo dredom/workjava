@@ -13,7 +13,7 @@ import com.dredom.spring.SayHello;
  * Unit test for simple App with default location for context xml config.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration
+//@ContextConfiguration
 public class AppTest {
 
 	@Autowired
