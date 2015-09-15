@@ -3,6 +3,7 @@ package com.dredom.function;
 import static java.lang.System.out;
 
 import java.util.function.Function;
+import java.util.function.Predicate;
 
 /**
  * Use Lambdas.
@@ -27,6 +28,23 @@ public class FunctionSample {
 
         int n = 3;
         out.printf("Factorial of %s = %s \n", n, factorial.apply(n));
+
+        Predicate<String> isEmpty = str -> {
+            if (str == null) {
+                return true;
+            }
+            if (str.length() == 0) {
+                return true;
+            }
+            return false;
+        };
+
+        s = "one";
+        out.printf("'%s' %s empty \n", s, isEmpty.test(s) ? "is" : "is not");
+        s = "";
+        out.printf("'%s' %s empty \n", s, isEmpty.test(s) ? "is" : "is not");
+        s = null;
+        out.printf("'%s' %s empty \n", s, isEmpty.test(s) ? "is" : "is not");
 
     }
 
