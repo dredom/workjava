@@ -19,15 +19,16 @@ public class FunctionSample {
         out.printf("Input=%s, output=%s \n", s, stringToInt.apply(s));
 
         Function<Integer, Integer> factorial = x -> {
-            int fac = x;
+            int fac = x > 1 ? x : 1;
             for (int i = x - 1; i > 0; i--) {
                 fac *= i;
             }
             return fac;
         };
 
-        int n = 3;
-        out.printf("Factorial of %s = %s \n", n, factorial.apply(n));
+        for (int n = 0; n < 5; n++) {
+            out.printf("Factorial of %s = %s \n", n, factorial.apply(n));
+        }
 
         Predicate<String> isEmpty = str -> {
             if (str == null) {
