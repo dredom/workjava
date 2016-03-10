@@ -47,6 +47,9 @@ public class FunctionSample {
         s = null;
         out.printf("'%s' %s empty \n", s, isEmpty.test(s) ? "is" : "is not");
 
+        // Runnable
+        new Thread( () -> System.out.println("HO!") ).start();
+
     }
 
 }
