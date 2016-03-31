@@ -30,7 +30,7 @@ public class StreamStuff {
 
     private void builderTest() {
         final String[] items = new String[] {
-                "One", "Two", "Three"
+                "A", "B", "C"
         };
 
         Stream.Builder<String> bldr = Stream.builder();
