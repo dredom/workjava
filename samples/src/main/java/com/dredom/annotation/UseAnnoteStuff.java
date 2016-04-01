@@ -29,6 +29,7 @@ public class UseAnnoteStuff {
 
 	}
 
+	@AnnoteStuff
 	@Deprecated
 	public void listAllAnnotations() {
 	    out.println("All annotations:");

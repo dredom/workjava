@@ -5,14 +5,14 @@ import static java.lang.System.out;
 import java.util.Random;
 import java.util.concurrent.Callable;
 
-public class WoofCallable implements Callable<Integer> {
+public class WoofCallable implements Callable<WoofStatus> {
 
-    private WoofStatus status;
+    private WoofStatus status = new WoofStatus();
 
     private volatile boolean cancelled;
 
     @Override
-    public Integer call() throws Exception {
+    public WoofStatus call() throws Exception {
         int count = 0;
         int times = 1 + new Random().nextInt(5);
         for (int i = 0; i < times; i++) {
@@ -29,7 +29,8 @@ public class WoofCallable implements Callable<Integer> {
             }
             Thread.sleep(200L);
         }
-        return times;
+        out.println("WoofCallable ending");
+        return status;
     }
 
 
@@ -37,6 +38,9 @@ public class WoofCallable implements Callable<Integer> {
     public void setStatus(WoofStatus status) {
         this.status = status;
     }
+
+
+
 
     public void setCancelled() {
         this.cancelled = true;

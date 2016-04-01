@@ -21,31 +21,43 @@ public class ProcessOnThread {
 
 //        doCallable();
         doFutureTask();
+        println("done");
     }
 
     static void doFutureTask() throws Exception {
         println("FUTURE TASK");
         ExecutorService service = Executors.newSingleThreadExecutor();
-        WoofCallable task = new WoofCallable();
-        WoofStatus status = new WoofStatus();
-        task.setStatus(status);
-        WoofFutureTask futureTask = new WoofFutureTask(task);
-        Future<?> future = service.submit(futureTask);
-        int max = 3;
+        try {
+            WoofCallable task = new WoofCallable();
+            WoofFutureTask futureTask = new WoofFutureTask(task);
+            Future<?> future = service.submit(futureTask);
+            int max = 3;
 
-        for (int i = 0; i < 9; i++) {
-            println("future.isDone=" + futureTask.isDone() + status);
-            if (futureTask.isDone()) {
-                break;
+            for (int i = 0; i < 9; i++) {
+                println("futureTask.isDone()=" + futureTask.isDone() );
+                if (futureTask.isDone()) {
+                    break;
+                }
+                if (i >= max) {
+                    println("cancel");
+                    futureTask.cancel(false);
+                    break;
+                }
+                Thread.sleep(70L);
             }
-            if (i >= max) {
-                println("cancel");
-                futureTask.cancel(false);
-            }
-            Thread.sleep(70L);
+            service.awaitTermination(100L, TimeUnit.MILLISECONDS);
+            println("future.isDone()=" +  future.isDone());
+            println("future.get()=" +  future.get());
+            println("futureTask.isDone()=" + futureTask.isDone() );
+            println("futureTask.isCancelled()=" + futureTask.isCancelled() );
+            println("futureTask.get()=" + futureTask.get() );
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            service.shutdown();
         }
-        service.awaitTermination(100L, TimeUnit.MILLISECONDS);
-        println("future.get=" + (futureTask.isCancelled() ? null : future.get()) + status);
+
 
     }
 
@@ -58,7 +70,7 @@ public class ProcessOnThread {
         WoofCallable task = new WoofCallable();
         WoofStatus status = new WoofStatus();
         task.setStatus(status);
-        Future<Integer> future = service.submit(task);
+        Future<WoofStatus> future = service.submit(task);
         int max = 3;
 
         for (int i = 0; i < 9; i++) {

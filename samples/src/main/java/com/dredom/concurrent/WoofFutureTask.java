@@ -4,7 +4,7 @@ import java.util.concurrent.FutureTask;
 /**
  * Wrapping the WoofCallable in a FutureTask allows us to set a "cancel" flag.
  */
-public class WoofFutureTask extends FutureTask<Integer> {
+public class WoofFutureTask extends FutureTask<WoofStatus> {
 
     private WoofCallable callable;
 
@@ -23,6 +23,5 @@ public class WoofFutureTask extends FutureTask<Integer> {
 //        return super.cancel(mayInterruptIfRunning);
         return true;
     }
-
 
 }
