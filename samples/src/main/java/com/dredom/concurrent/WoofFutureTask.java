@@ -12,6 +12,10 @@ public class WoofFutureTask extends FutureTask<WoofStatus> {
         super(callable);
         this.callable = callable;
     }
+    public WoofFutureTask(WoofCallable callable, WoofStatus status) {
+        this(callable);
+        this.callable.setStatus(status);
+    }
 
     /**
      * Because we do not super.setCancelled() the FutureTask itself will not reflect isCancelled().

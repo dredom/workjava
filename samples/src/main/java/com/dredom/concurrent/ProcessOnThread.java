@@ -29,8 +29,9 @@ public class ProcessOnThread {
         ExecutorService service = Executors.newSingleThreadExecutor();
         try {
             WoofCallable task = new WoofCallable();
-            WoofFutureTask futureTask = new WoofFutureTask(task);
-            Future<?> future = service.submit(futureTask);
+            WoofStatus status = new WoofStatus();
+            WoofFutureTask futureTask = new WoofFutureTask(task, status);
+            Future<?> future = service.submit(futureTask, status);
             int max = 3;
 
             for (int i = 0; i < 9; i++) {
