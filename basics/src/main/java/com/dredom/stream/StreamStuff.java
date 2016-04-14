@@ -20,7 +20,7 @@ public class StreamStuff {
         List<String> list = Arrays.asList(new String[] {
                 "One", "Two", "Three"
         });
-
+        System.out.println("Test forEach: " + list);
         Stream<String> stream = list.stream();
         Consumer<? super String> consumer = item -> System.out.println(item);
         stream.forEach(consumer);
@@ -32,7 +32,7 @@ public class StreamStuff {
         final String[] items = new String[] {
                 "A", "B", "C"
         };
-
+        System.out.println("Test builder: ");
         Stream.Builder<String> bldr = Stream.builder();
         for (String item : items) {
             bldr.accept(item);
@@ -44,6 +44,7 @@ public class StreamStuff {
 
     private void filter() {
         final int[] items = new int[] { 1, 2, 3 };
+        System.out.println("Test filter: " + Arrays.toString(items));
         IntStream stream = IntStream.of(items);
         IntPredicate predicate = item -> item > 1;
         long count = stream

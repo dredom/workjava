@@ -50,6 +50,29 @@ public class FunctionSample {
         // Runnable
         new Thread( () -> System.out.println("HO!") ).start();
 
+        out.println("Test using service class in lambda.");
+        DoStuff stuffer = new DoStuff();
+        Function<String, String> stufit = in -> {
+            try {
+                return stuffer.stuffIt(in);
+            } catch (Exception e) {
+                throw new RuntimeException("Oops", e);
+            }
+        };
+        out.println(stufit.apply("Abra"));
+    }
+
+    /**
+     * Use this in a lambda.
+     */
+    static class DoStuff {
+        public String stuffIt(String in) throws Exception {
+            if (in == null) {
+                throw new Exception("null");
+            }
+            String out = String.format("Form:[%s]", in);
+            return out;
+        }
     }
 
 }
