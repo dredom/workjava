@@ -37,6 +37,7 @@ public class LambdaSamples {
         instance.withLambdaPredicate();
         instance.withMethodReference();
         instance.withLambdaConsumer();
+        instance.withLambdaFromStream();
 
     }
 
@@ -79,6 +80,34 @@ public class LambdaSamples {
             }
         }
 
+        // Method call with in-line lambdas - generics in overdrive
+        processElements(persons,
+                p -> p.age > age,  // Predicate<T>
+                p -> p.name,                        // Function<T, R>
+                p -> out.println(" " + p)           // Consumer<R>
+                );
+    }
+    private <X, Y> void processElements(Iterable<X> source,
+            Predicate<X> tester, Function<X, Y> mapper, Consumer<Y> consumer) {
+        for (X item : source) {
+            if (tester.test(item)) {
+                Y data = mapper.apply(item);
+                consumer.accept(data);
+            }
+        }
+    }
+
+    /**
+     * Stream - aggregate operations.
+     */
+    void withLambdaFromStream() {
+        final int age = 30;
+        out.println("withLambdaFromStream: filter, map, forEach " );
+        persons.stream()
+            .filter(p -> p.age > age)
+            .map(p -> p.name)
+            .sorted()
+            .forEach(n -> out.println(" " + n));
     }
 
     /**
