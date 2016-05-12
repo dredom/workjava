@@ -7,6 +7,9 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.stream.Stream;
 
+/**
+ * Use parallel stream, return status of failures.
+ */
 public class StreamParallelStuff {
 
     public static void main(String[] args) {

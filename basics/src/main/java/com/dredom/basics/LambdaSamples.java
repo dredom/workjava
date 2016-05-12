@@ -3,8 +3,8 @@ package com.dredom.basics;
 import static java.lang.System.out;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Predicate;
@@ -38,6 +38,7 @@ public class LambdaSamples {
         instance.withMethodReference();
         instance.withLambdaConsumer();
         instance.withLambdaFromStream();
+        instance.lambdaWithMultiInput();
 
     }
 
@@ -83,8 +84,8 @@ public class LambdaSamples {
         // Method call with in-line lambdas - generics in overdrive
         processElements(persons,
                 p -> p.age > age,  // Predicate<T>
-                p -> p.name,                        // Function<T, R>
-                p -> out.println(" " + p)           // Consumer<R>
+                p -> p.name,                    // Function<T, R>
+                p -> out.println(" " + p)       // Consumer<R>
                 );
     }
     private <X, Y> void processElements(Iterable<X> source,
@@ -110,6 +111,15 @@ public class LambdaSamples {
             .forEach(n -> out.println(" " + n));
     }
 
+    void lambdaWithMultiInput() {
+        out.println("lambdaWithMultiInput:");
+        final String sufx = "sufx";
+        BiFunction<Person, String, String> func = (person, suffix) -> {
+           return person.name + ":" + suffix;
+        };
+        String result = func.apply(persons.get(0), sufx);
+        out.println(result);
+    }
     /**
      * Method reference:  "::"
      * Can be used in place of lambda expressions as long as they satisfy the requirements of the functional interface.
