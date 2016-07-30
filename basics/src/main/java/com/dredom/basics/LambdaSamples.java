@@ -100,6 +100,7 @@ public class LambdaSamples {
 
     /**
      * Stream - aggregate operations.
+     * Consumer is defined as lambda println.
      */
     void withLambdaFromStream() {
         final int age = 30;
