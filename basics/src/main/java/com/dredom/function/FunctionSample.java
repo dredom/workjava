@@ -47,8 +47,11 @@ public class FunctionSample {
         s = null;
         out.printf("'%s' %s empty \n", s, isEmpty.test(s) ? "is" : "is not");
 
-        // Runnable
-        new Thread( () -> System.out.println("HO!") ).start();
+        // Runnable example:
+//        public void runAsync(Runnable r) {
+//            new Thread(r).start();
+//          }
+        new Thread( () -> System.out.println("Async HO!") ).start();
 
         out.println("Test using service class in lambda.");
         DoStuff stuffer = new DoStuff();
