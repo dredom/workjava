@@ -27,7 +27,7 @@ import java.util.Set;
 public class Boggle {
     static char[][] grid;
 
-    static String dictionaryString = "ALE APE BE BEND PAN LEAN CAP COPE A LAB LEAF LEAP FOOL NACK";
+    static String dictionaryString = "ALE APE BE BEND PALE PALED PAN PANG LEAN CAP COPE DANCE A LAB LEAF LEAP FOOL NACK";
     static Set<String> dictionary;
     static Set<String> partialWords;
 
@@ -92,8 +92,8 @@ public class Boggle {
 	}
 
 	/**
-	 * FIXME Bug with 'covered' array - false positives when travelling a route
-	 * because it is shared by other travellers. Each travel should have its own.
+	 * Fixed bug with 'covered' array - false positives when traveling a route
+	 * because it was shared by other travelers. Each travel needs its own.
 	 */
 	private List<String> process(int x, int y, boolean covered[][], String route) {
 	    if (x < 0 || x >= 4 || y < 0 || y >= 4) {
@@ -111,11 +111,18 @@ public class Boggle {
         if (isWord(route)) {
             out.add(route);
         }
-	    covered[x][y] = true;
+        boolean[][] newCovered = new boolean[4][4];
+        for (int i = 0; i < 4; i++) {
+            for (int j = 0; j < 4; j++) {
+                newCovered[i][j] = covered[i][j];
+            }
+        }
+        covered = null;
+        newCovered[x][y] = true;
 	    // iterate through all surrounding letters
 	    for (int ix = -1; ix <= 1; ix++) {
 	        for (int iy = -1; iy <= 1; iy++ ) {
-	            List<String> result = process(x + ix, y + iy, covered, route);
+	            List<String> result = process(x + ix, y + iy, newCovered, route);
 	            if (result != null) {
 	                out.addAll(result);
 	            }
