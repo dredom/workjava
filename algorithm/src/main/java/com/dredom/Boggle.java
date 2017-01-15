@@ -7,6 +7,10 @@ import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 /**
  * Boggle is a find-words game. You shake it up, then the die
@@ -27,7 +31,8 @@ import java.util.Set;
 public class Boggle {
     static char[][] grid;
 
-    static String dictionaryString = "ALE APE BE BEND PALE PALED PAN PANG LEAN CAP COPE DANCE A LAB LEAF LEAP FOOL NACK";
+    static String dictionaryString = "ALE APE BE BEND PACE PALE PALED PAN PANG PACK PEEK POPE NOPE PENAL "
+            + "LEAN CAP COPE DANCE A LAB LEAF LEAP FOOL NACK";
     static Set<String> dictionary;
     static Set<String> partialWords;
 
@@ -38,7 +43,8 @@ public class Boggle {
 		init(args);
 		printGrid();
 		Boggle instance = new Boggle();
-		String[] words = instance.process();
+//        String[] words = instance.process();
+        String[] words = instance.processAsync();
 		System.out.println(Arrays.deepToString(words));
 	}
 
@@ -89,6 +95,43 @@ public class Boggle {
 	    }
 	    return result.toArray(new String[result.size()]);
 
+	}
+
+	static class Node {
+	    public int x;
+	    public int y;
+        public Node(int x, int y) {
+            super();
+            this.x = x;
+            this.y = y;
+        }
+	}
+
+	/**
+	 * Leverage Streams with parallel processing to process each node in the array.
+	 * @return array of words found
+	 */
+	public String[] processAsync() {
+	    // Build a stream of the start nodes.
+	    Stream.Builder<Node> builder = Stream.builder();
+        for (int x = 0; x < grid.length; x++) {
+            for (int y = 0; y < grid[x].length; y++) {
+                builder.accept(new Node(x, y));
+            }
+        }
+        Function<Node, List<String>> mapper = node -> {
+            final String route = "";
+            final boolean[][] covered = new boolean[4][4];
+            return process(node.x, node.y, covered, route);
+        };
+        Stream<Node> stream = builder.build();
+        List<String> result = stream
+                .parallel()
+                .map( mapper)
+                .filter( l -> l != null)
+                .flatMap( l -> l.stream())
+                .collect(Collectors.toList());
+        return result.toArray(new String[result.size()]);
 	}
 
 	/**
