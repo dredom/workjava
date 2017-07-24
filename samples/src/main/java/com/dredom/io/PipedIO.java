@@ -43,6 +43,8 @@ public class PipedIO {
 
     public Status writeToStorage(InputStream inputFileStream, String filename) {
 
+        ExecutorService executor = Executors.newFixedThreadPool(1);
+
         try (PipedInputStream pipedIn = new PipedInputStream(pipeSize);
                 PipedOutputStream pipedOut = new PipedOutputStream(pipedIn);
                 ) {
@@ -51,7 +53,6 @@ public class PipedIO {
             writer.setStorageService(new S3Service());
 
             // Start thread to write to S3
-            ExecutorService executor = Executors.newFixedThreadPool(1);
             Future<MetaData> future = executor.submit(writer);
 
             // Filter uploaded stream to check size
@@ -62,6 +63,7 @@ public class PipedIO {
                 size += len;
                 if (size > maxSize) {
                     System.out.println("Size " + size + " exceeds " + maxSize + ". Aborting.");
+                    pipedOut.close();
                     future.cancel(true);
                     break;
                 }
@@ -78,6 +80,7 @@ public class PipedIO {
             e.printStackTrace();
             return Status.failure;
         } finally {
+            executor.shutdown();
             try {
                 inputFileStream.close();
             } catch (IOException e) {
