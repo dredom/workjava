@@ -11,12 +11,14 @@ import java.util.Arrays;
  *  The lesser element is then removed from its list and added to the final result list.
  * <p>
  * Time average & worst:   O(n log(n))   - n * log(n)
- * Space:  O(n)
+ * Space:  O(n), if you count stack frames for recursion O(n) + O(log(n)), so still O(n).
  */
 public class MergeSort {
 
-    static int[] array = { 21, 3, 1, 11, 5, 2, 7 };
 //    static int[] array = { 21, 3, 1};
+//    static int[] array = { 21, 3, 1, 11, 5, 2, 7 };
+    static int[] array = { 21,19, 17, 3, 1, 2, 11, 5, 2, 7 };
+    static boolean optimize = true;
 
     /**
      * @param args
@@ -41,20 +43,39 @@ public class MergeSort {
 		int mid = nums.length / 2;
 		int[] left = sort( copy(nums, 0, mid) );
 		int[] right = sort( copy(nums, mid, nums.length - mid) );
-		// Merge
-		int[] result = new int[nums.length];
-		for (int l = 0, r = 0, x = 0; x < result.length; x++) {
-			if (l >= left.length) {
-				result[x] = right[r++];
-			} else if (r >= right.length) {
-				result[x] = left[l++];
-			} else if (left[l] <= right[r]) {
-				result[x] = left[l++];
-			} else {
-				result[x] = right[r++];
-			}
+		System.out.printf(" %s %s \n", Arrays.toString(left), Arrays.toString(right));
+		// Merge into input array to save space
+		if (optimize) {
+		    if (left[left.length - 1] < right[0]) {
+		        System.arraycopy(left, 0, nums, 0, left.length);
+		        System.arraycopy(right, 0, nums, left.length, right.length);
+		        return nums;
+		    }
+		    if (right[right.length - 1] < left[0]) {
+		        System.arraycopy(right, 0, nums, 0, right.length);
+		        System.arraycopy(left, 0, nums, right.length, left.length);
+		        return nums;
+		    }
 		}
-		return result;
+        int l = 0;
+        int r = 0;
+        int s = 0;
+		while (s < nums.length) {
+            while (l < left.length && r < right.length) {
+                if (left[l] < right[r]) {
+                    nums[s++] = left[l++];
+                } else {
+                    nums[s++] = right[r++];
+                }
+            }
+            if (l < left.length) {
+                System.arraycopy(left, l, nums, s, left.length - l);
+            } else {
+                System.arraycopy(right, r, nums, s, right.length - r);
+            }
+            s = nums.length;
+        }
+		return nums;
 	}
 
 	private static int[] copy(int[] in, int start, int length) {

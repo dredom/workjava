@@ -5,6 +5,7 @@ http://docs.mongodb.org/manual/tutorial/install-mongodb-on-os-x/
  brew update
  brew install mongodb
  brew update mongodb
+  mongod --config /usr/local/etc/mongod.conf
 
 Start server:
  mongod
