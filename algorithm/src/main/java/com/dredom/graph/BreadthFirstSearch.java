@@ -31,6 +31,10 @@ import java.util.ArrayDeque;
  * Input: Rectangles which are already filled (true).
  * <p>
  * Output: Sizes of unfilled rectangles;
+ * <p>
+ * Big O time O(64 * height * width) worst, 2 positions A and B, size of grid. ??
+ * All combinations of A and B in grid and steps to get there.
+ * One move generates potentially 8 x 8 nodes (A and B combinations with 8 positions around each).
  */
 public class BreadthFirstSearch {
 
@@ -134,7 +138,7 @@ public class BreadthFirstSearch {
         start.pBy = yB;
         start.steps = 0;
 
-        ArrayDeque<Node> queue = new ArrayDeque<BreadthFirstSearch.Node>();
+        ArrayDeque<Node> queue = new ArrayDeque<>();
         queue.push(start);
 
         int iteration = 1;

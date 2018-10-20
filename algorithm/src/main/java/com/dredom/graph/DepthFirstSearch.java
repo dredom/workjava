@@ -27,10 +27,10 @@ public class DepthFirstSearch {
 
     static boolean[][] fill = new boolean[xlen][ylen];
 
-    static String[] rectangles = {
+    static int[][] rectangles = {
 //        "0 292 399 307",
 //        "0 2 3 4",  // top, left, bottom, right
-        "0 2 2 4",  // top, left, bottom, right
+        { 0, 2, 2, 4 },  // top, left, bottom, right
 //        "0 192 399 207", "0 392 399 407", "120 0 135 599", "260 0 275 599",
     };
     static int[] expected = {
@@ -66,7 +66,7 @@ public class DepthFirstSearch {
      * @return sizes of areas unfilled
      */
     static Integer[] search(boolean[][] input) {
-        List<Integer> results = new ArrayList<Integer>();
+        List<Integer> results = new ArrayList<>();
         for (int x = 0; x < xlen; x++) {
             for (int y = 0; y < ylen; y++) {
                 if (input[x][y] == false) {
@@ -80,11 +80,11 @@ public class DepthFirstSearch {
 
     static int doFill(int x, int y) {
         int result = 0;
-        ArrayDeque<Node> stack = new ArrayDeque<DepthFirstSearch.Node>();
+        ArrayDeque<Node> stack = new ArrayDeque<>();
         stack.add(new Node(x, y));
         while (!stack.isEmpty()) {
             Node top = stack.pop();
-            // Check we haven't visited this pixel before
+            // Check we haven't visited this pixel before and not already filled.
             if (fill[top.x][top.y]) {
                 continue;
             }
@@ -117,13 +117,12 @@ public class DepthFirstSearch {
         for (int j = 0; j < fill.length; j++) {
             Arrays.fill(fill[j], false);
         }
-        for (String rectangle : rectangles) {
-            out.println("Filled rectangle: " + rectangle + "  (top, left, bottom, right)");
-            String[] coords = rectangle.split(" ");
-            int top = Integer.parseInt(coords[0]);
-            int left = Integer.parseInt(coords[1]);
-            int bottom = Integer.parseInt(coords[2]);
-            int right = Integer.parseInt(coords[3]);
+        for (int[] rectangle : rectangles) {
+            out.println("Filled rectangle: " + Arrays.toString(rectangle) + "  (top, left, bottom, right)");
+            int top = rectangle[0];
+            int left = rectangle[1];
+            int bottom = rectangle[2];
+            int right = rectangle[3];
 
             for (int y = top; y <= bottom; y++) {
                 for (int x = left; x <= right; x++) {
