@@ -130,6 +130,9 @@ public class Heap {
      * In the heap tree, find the next vacant spot.
      * BFS from root looking for Node with open child Left or Right.
      * Each level down count is 2^n, eg level 1 = 2, level 2 = 4, etc.
+     *
+     * <p>Make this by saving the bottom row. Heapify would need to update any changes in this bottom row.
+     *
      * @return Node
      */
     private Node getNextAvailableParent() {
@@ -313,18 +316,16 @@ public class Heap {
         String spacerLeft = spacer(spacerLeftLen);
         out.print(spacerLeft);
         String spacerTween = "";
-        if (level > 0) {
-            // spacer tween is previous level left spacer
-            int previousHeight = depth - (level - 1);
-            int spacerTweenLen = (int) (Math.pow(2, previousHeight) - 1)  * itemSize;
-            spacerTween = spacer(spacerTweenLen);
-        }
+        // spacer tween is previous level left spacer
+        int previousHeight = depth - (level - 1);
+        int spacerTweenLen = (int) (Math.pow(2, previousHeight) - 1)  * itemSize;
+        spacerTween = spacer(spacerTweenLen);
         double rowItems = Math.pow(2, level - 1);
         // Print in two's, with bigger spacer between the two's.
         int count = 0;
         while (!queue.isEmpty() && count++ < rowItems) {
             Node node = queue.removeFirst();
-            out.printf("%s%s", node, spacerTween);
+            out.printf("%-10s%s", node, spacerTween);
         }
         out.println();
         printLevel(queue, ++level, depth);
