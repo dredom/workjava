@@ -4,8 +4,10 @@
 package com.dredom.graph;
 
 import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
+import java.util.List;
 import java.util.PriorityQueue;
 import java.util.concurrent.ArrayBlockingQueue;
 
@@ -33,7 +35,7 @@ import static java.lang.System.out;
 public class Heap {
 
     private Node root;
-    private Node last;
+//    private Node last;
 
     public class Node implements Comparable<Node> {
         private final int key;
@@ -121,35 +123,11 @@ public class Heap {
             }
             heapify(node);
         }
-//        last = node;
     }
 
-    /**
-     * In the tree, find the next vacant spot?
-     * @param last
-     * @return
-     */
-    private Node nextParent(Node last) {
-        if (last == null) {
-            return null;
-        }
-        Node parent = last.getParent();
-        if (parent == null) {
-            return last;
-        }
-        // Empty spot on right?
-        if (parent.getRight() == null) {
-            return parent;
-        }
-        // Go over one tree edge to get one.
-        parent = getSiblingParentOnRight(parent);
-        if (parent != null) {
-            return parent;
-        }
-        return getBottomLeft(root);
-    }
 
     /**
+     * In the heap tree, find the next vacant spot.
      * BFS from root looking for Node with open child Left or Right.
      * Each level down count is 2^n, eg level 1 = 2, level 2 = 4, etc.
      * @return Node
@@ -160,6 +138,7 @@ public class Heap {
         queue.addLast(root);;
         return getNextAvailableParent(queue, level);
     }
+
     /**
      * Add children to queue for every node in this level.
      * If node found with an empty child, return it.
@@ -174,9 +153,6 @@ public class Heap {
         while (count++ < itemsInLevel) {
             // It is impossible for the queue to be empty because there has to be child nodes for every parent
             // and child nodes mean there will be another level down.
-//            if (queue.isEmpty()) {
-//                return null;
-//            }
             Node item = queue.removeFirst();
             if (item.getLeft() == null || item.getRight() == null) {
                 return item;
@@ -192,19 +168,11 @@ public class Heap {
         return getNextAvailableParent(queue, ++level);
     }
 
-    private Node getSiblingParentOnRight(Node node) {
-        if (node.getParent() == null) {
-            return null;
-        }
-        Node parent = node.getParent();
-        if (node.equals(parent.getRight())) {
-            return null;
-        }
-        return parent.getRight();
-    }
 
     /**
-     * Heapify from node up.
+     * Heapify from node up - max heap maintains highest value at root.
+     * No need to go down sibling child trees because if a node is promoted to parent
+     * then it is greater than the old parent which was greater than its children.
      *
      * @param node
      */
@@ -219,12 +187,6 @@ public class Heap {
         }
     }
 
-    private Node getBottomLeft(Node node) {
-        if (node.getLeft() == null) {
-            return node;
-        }
-        return getBottomLeft(node.getLeft());
-    }
 
     private void swapChildWithParent(Node child) {
         if (child.getParent() == null) {
@@ -241,6 +203,7 @@ public class Heap {
             }
             setParentChildLinksToParent(grandParent);
         } else {
+            // root - no parent
             child.setParent(null);
         }
         // Save child children for oldParent which will be the new child.
@@ -266,10 +229,6 @@ public class Heap {
         if (root.equals(oldParent)) {
             root = child;
         }
-//        if (last.equals(child)) {
-//            last = oldParent;
-//        }
-
     }
 
 
@@ -286,9 +245,6 @@ public class Heap {
         return root;
     }
 
-    public Node getLast() {
-        return last;
-    }
 
     /**
      * @param args
@@ -300,20 +256,102 @@ public class Heap {
         for (int val : values) {
             hp.add(val);
         }
-        System.out.printf("root=%s, last=%s \n", hp.getRoot(), hp.getLast());
-        printNodes(hp.getRoot(), 1);
+        System.out.printf("root=%s \n", hp.getRoot());
+//        printNodes(hp.getRoot(), 1);
+        printNodes(hp.getRoot());
     }
 
+    /**
+     * Print a graph with root in top center, children trees arranged below.
+     *
+     * <ul>
+     *  <li>Build BFS queue.
+     *  <li>Print by level.
+     * </ul>
+     * @param node
+     */
     public static void printNodes(Node node) {
-        printNodes(node, 1);
+        Deque<Node> queue = new ArrayDeque<>();
+        queue.add(node);
+        Deque<Node> nodes = new ArrayDeque<>();
+        buildBFSQueue(queue, 0, nodes);
+        printTree(nodes);
     }
 
-    private static void printNodes(Node node, int level) {
-        if (node == null) {
+
+    private static void printTree(Deque<Node> queue) {
+        int len = queue.size();
+        // Compute how many levels in tree
+        int length = len;
+        int levels = 0;
+        while (length > 0) {
+            length -= Math.pow(2, levels++);
+        }
+        out.printf("queue size=%s, depth=%s %n", len, levels);
+        printLevel(queue, 1, levels);
+    }
+
+    /**
+     * Start from bottom to figure out spacing.
+     * Assuming simple spacing for 4 x node bottom row like
+     * <pre> X_X_X_X </pre>
+     * At each level there are 2^height - 1 nodes below.
+     * Formula for left spacer = 2^height - 1
+     *                         = 2^(depth - level) - 1
+     * @param queue
+     * @param level
+     * @param depth
+     */
+    private static void printLevel(Deque<Node> queue, int level, int depth) {
+        if (queue.isEmpty()) {
             return;
         }
-        out.printf("lvl:%s \t%s \t LEFT %s \t RIGHT %s \n", level, node, node.getLeft(), node.getRight());
-        printNodes(node.getLeft(), level + 1);
-        printNodes(node.getRight(), level + 1);
+        // Compute spacing for this level - so we center it nicely.
+        // Left spacer is bottom row length / level * 2
+        final int itemSize = 10;
+        int spacerLeftLen = (int) (Math.pow(2, depth - level) - 1) * itemSize;
+        String spacerLeft = spacer(spacerLeftLen);
+        out.print(spacerLeft);
+        String spacerTween = "";
+        if (level > 0) {
+            // spacer tween is previous level left spacer
+            int previousHeight = depth - (level - 1);
+            int spacerTweenLen = (int) (Math.pow(2, previousHeight) - 1)  * itemSize;
+            spacerTween = spacer(spacerTweenLen);
+        }
+        double rowItems = Math.pow(2, level - 1);
+        // Print in two's, with bigger spacer between the two's.
+        int count = 0;
+        while (!queue.isEmpty() && count++ < rowItems) {
+            Node node = queue.removeFirst();
+            out.printf("%s%s", node, spacerTween);
+        }
+        out.println();
+        printLevel(queue, ++level, depth);
+    }
+
+    private static String spacer(int length) {
+        char[] chars = new char[length];
+        Arrays.fill(chars, ' ');
+        return String.valueOf(chars);
+    }
+    private static void buildBFSQueue(Deque<Node> queue, int level, Deque<Node> out) {
+        double itemsInLevel = Math.pow(2, level);
+        int count = 0;
+        // Every node we are about to process here was added to the queue in the previous level.
+        while (count++ < itemsInLevel) {
+            if (queue.isEmpty()) {
+                return;
+            }
+            Node item = queue.removeFirst();
+            if (item.getLeft() != null) {
+                queue.addLast(item.getLeft());
+            }
+            if (item.getRight() != null) {
+                queue.addLast(item.getRight());
+            }
+            out.add(item);
+        }
+        buildBFSQueue(queue, ++level, out);
     }
 }
