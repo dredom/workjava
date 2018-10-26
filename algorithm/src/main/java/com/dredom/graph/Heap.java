@@ -3,15 +3,12 @@
  */
 package com.dredom.graph;
 
+import static java.lang.System.out;
+
 import java.util.ArrayDeque;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Deque;
-import java.util.List;
 import java.util.PriorityQueue;
-import java.util.concurrent.ArrayBlockingQueue;
-
-import static java.lang.System.out;
 
 /**
  * A heap is a tree-based data structure in which all the nodes of the tree are in a specific order. A Max Heap has
@@ -27,6 +24,8 @@ import static java.lang.System.out;
  * This implementation is a max Binary Heap and uses nodes with L:R children and linked to parent.
  * <p>
  * Complexity O(log(n))
+ *
+ * <p>TODO heapify() currently can leave a higher value at a lower level than another branch node.
  *
  * @see PriorityQueue
  * @see <a href="https://www.hackerearth.com/practice/data-structures/trees/heapspriority-queues/tutorial/">Heaps,
