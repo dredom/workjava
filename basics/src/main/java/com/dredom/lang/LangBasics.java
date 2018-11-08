@@ -17,6 +17,14 @@ import static java.lang.System.out;
 public class LangBasics {
 
 	public static void main(String[] args) {
+	    out.println("Primitive Data Type lengths");
+	    out.printf("byte\t %s bits \t %s - %s \n", 8, -128, 127);
+	    out.printf("char\t %s bits \t Unicode\n", 16);
+	    out.printf("short\t %s bits \t %s - %s \n", 16, -32768, 32767);
+	    out.printf("int  \t %s bits \t %s - %s \n", 32, "-2^32", "2^32-1");
+	    out.printf("long \t %s bits \t %s - %s \n", 64, "-2^63", "2^63-1");
+	    out.printf("float \t %s bits  \n", 32);
+	    out.printf("double\t %s bits  \n", 64);
 		out.println(args.length);
 		out.println(" 10 to the power of 2 = 10E2");
 		out.printf(" 10E0 = %f \t Math.pow(10, 0) \n", Math.pow(10, 0));
@@ -63,5 +71,17 @@ public class LangBasics {
 		out.printf(" ( 7 & 7) = %d \n", ( 7 & 7));
 		out.printf(" (-7 & 7) = %d \n", (-7 & 7));
 		out.printf(" ( 6 & 7) = %d \n", ( 6 & 7));
+		out.println("Conversions...");
+		byte b = '1';
+		out.printf("byte b = '1' -> %s\n", b);    // 49
+		byte b1 = 1;
+		out.printf("byte b = 1 -> %s\n", b1);     // 1
+		byte b2 = "1".getBytes()[0];
+		out.printf("byte b = \"1\".getBytes()[0] -> %s\n", b2);
+		byte b3 = (byte) Integer.parseInt("2");
+		out.printf("byte b = (byte) Integer.parseInt(\"2\") -> %s\n", b3);
+		String in1 = "123";
+		out.printf("Integer.parseInt(Character.toString(\"%s\".charAt(1))) -> \t%s \n", in1, Integer.parseInt(Character.toString(in1.charAt(1))));
+
 	}
 }
