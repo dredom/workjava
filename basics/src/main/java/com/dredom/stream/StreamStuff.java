@@ -41,6 +41,7 @@ public class StreamStuff {
         instance.forEach();
         instance.builderTest();
         instance.filter();
+        instance.filterCompact();
         instance.collector();
     }
 
@@ -75,6 +76,14 @@ public class StreamStuff {
                 .filter(predicate)
                 .count();
         out.printf(" Items > 1: %d \n", count);
+    }
+
+    private void filterCompact() {
+        final int[] items = { 1, 2, 3 };
+        long count = IntStream.of(items)
+                .filter(i -> i > 1)
+                .count();
+        out.printf( "Items > 1: %d \n", count);
     }
 
     /**
