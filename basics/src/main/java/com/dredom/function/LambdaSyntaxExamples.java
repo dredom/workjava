@@ -9,7 +9,10 @@ import java.util.function.Predicate;
 import static java.lang.System.out;
 
 /**
- * @author andre
+ * Note that a lambda expression looks a lot like a method declaration;
+ * you can consider lambda expressions as anonymous methods—methods without a name.
+ *
+ * https://docs.oracle.com/javase/tutorial/java/javaOO/lambdaexpressions.html
  *
  */
 public class LambdaSyntaxExamples {
@@ -35,7 +38,6 @@ public class LambdaSyntaxExamples {
     }
 
     public static void main(String[] args) {
-        // TODO Auto-generated method stub
         LambdaSyntaxExamples instance = new LambdaSyntaxExamples();
         instance.doExample();
     }
