@@ -8,6 +8,8 @@ import static java.lang.System.out;
  *
  * It seems the wait() must come first. The threads execute asynchronously, in unpredictable order.
  * If the notify() comes first then the wait() is interminable.
+ * 
+ * Adding max time - wait(100) - would be a failsafe for scenarios where the waiter is not async.
  */
 public class WaitNotify {
 
