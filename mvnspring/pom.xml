@@ -13,7 +13,7 @@
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <log4j.configuration>${base}/src/main/resources/log4j.properties</log4j.configuration>
-    <spring.version>5.3.18</spring.version>
+    <spring.version>5.3.26</spring.version>
   </properties>
 
   <dependencies>
